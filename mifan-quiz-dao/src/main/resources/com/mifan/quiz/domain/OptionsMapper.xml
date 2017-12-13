@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mifan.quiz.domain.Options">
+
+    <!-- result map -->
+    <resultMap id="options" type="com.mifan.quiz.domain.Options">
+        <id property="id" column="id" javaType="long"/>
+        <result property="questionId" column="question_id" javaType="long"/>
+        <result property="optionTitle" column="option_title" javaType="string"/>
+        <result property="isCorrect" column="is_correct" javaType="int"/>
+        <result property="enabled" column="enabled" javaType="int"/>
+        <result property="modifier" column="modifier" javaType="long"/>
+        <result property="creator" column="creator" javaType="long"/>
+        <result property="modified" column="modified" javaType="date"/>
+        <result property="created" column="created" javaType="date"/>
+    </resultMap>
+
+    <!-- sql -->
+    <sql id="columns">
+        <choose>
+            <when test="fields != null and fields.size != 0">
+                <foreach collection="fields" separator="," item="item" index="index">
+                    ${item.fullname}
+                </foreach>
+            </when>
+            <otherwise>
+                id, question_id, option_title, is_correct, enabled, modifier, creator, modified, created 
+            </otherwise>
+        </choose>
+    </sql>
+
+    <sql id="insertColumns">
+        <trim suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="questionId != null">
+                question_id,
+            </if>
+            <if test="optionTitle != null">
+                option_title,
+            </if>
+            <if test="isCorrect != null">
+                is_correct,
+            </if>
+            <if test="enabled != null">
+                enabled,
+            </if>
+            <if test="modifier != null">
+                modifier,
+            </if>
+            <if test="creator != null">
+                creator,
+            </if>
+            <if test="modified != null">
+                modified,
+            </if>
+            <if test="created != null">
+                created,
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="insertEntityColumns">
+        <trim suffixOverrides=",">
+            <if test="insert.id != null">
+                id,
+            </if>
+            <if test="insert.questionId != null">
+                question_id,
+            </if>
+            <if test="insert.optionTitle != null">
+                option_title,
+            </if>
+            <if test="insert.isCorrect != null">
+                is_correct,
+            </if>
+            <if test="insert.enabled != null">
+                enabled,
+            </if>
+            <if test="insert.modifier != null">
+                modifier,
+            </if>
+            <if test="insert.creator != null">
+                creator,
+            </if>
+            <if test="insert.modified != null">
+                modified,
+            </if>
+            <if test="insert.created != null">
+                created,
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="insertValues">
+        <trim suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="questionId != null">
+                #{questionId},
+            </if>
+            <if test="optionTitle != null">
+                #{optionTitle},
+            </if>
+            <if test="isCorrect != null">
+                #{isCorrect},
+            </if>
+            <if test="enabled != null">
+                #{enabled},
+            </if>
+            <if test="modifier != null">
+                #{modifier},
+            </if>
+            <if test="creator != null">
+                #{creator},
+            </if>
+            <if test="modified != null">
+                #{modified},
+            </if>
+            <if test="created != null">
+                #{created},
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="insertEntityValues">
+        <trim suffixOverrides=",">
+            <if test="insert.id != null">
+                #{insert.id},
+            </if>
+            <if test="insert.questionId != null">
+                #{insert.questionId},
+            </if>
+            <if test="insert.optionTitle != null">
+                #{insert.optionTitle},
+            </if>
+            <if test="insert.isCorrect != null">
+                #{insert.isCorrect},
+            </if>
+            <if test="insert.enabled != null">
+                #{insert.enabled},
+            </if>
+            <if test="insert.modifier != null">
+                #{insert.modifier},
+            </if>
+            <if test="insert.creator != null">
+                #{insert.creator},
+            </if>
+            <if test="insert.modified != null">
+                #{insert.modified},
+            </if>
+            <if test="insert.created != null">
+                #{insert.created},
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="updateValues">
+        <trim suffixOverrides=",">
+            <if test="questionId != null">
+                question_id = #{questionId},
+            </if>
+            <if test="optionTitle != null">
+                option_title = #{optionTitle},
+            </if>
+            <if test="isCorrect != null">
+                is_correct = #{isCorrect},
+            </if>
+            <if test="enabled != null">
+                enabled = #{enabled},
+            </if>
+            <if test="modifier != null">
+                modifier = #{modifier},
+            </if>
+            <if test="creator != null">
+                creator = #{creator},
+            </if>
+            <if test="modified != null">
+                modified = #{modified},
+            </if>
+            <if test="created != null">
+                created = #{created},
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="updateValuesByCriterion">
+        <trim suffixOverrides=",">
+            <if test="entity.questionId != null">
+                question_id = #{entity.questionId},
+            </if>
+            <if test="entity.optionTitle != null">
+                option_title = #{entity.optionTitle},
+            </if>
+            <if test="entity.isCorrect != null">
+                is_correct = #{entity.isCorrect},
+            </if>
+            <if test="entity.enabled != null">
+                enabled = #{entity.enabled},
+            </if>
+            <if test="entity.modifier != null">
+                modifier = #{entity.modifier},
+            </if>
+            <if test="entity.creator != null">
+                creator = #{entity.creator},
+            </if>
+            <if test="entity.modified != null">
+                modified = #{entity.modified},
+            </if>
+            <if test="entity.created != null">
+                created = #{entity.created},
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="simpleConditions">
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="entity.id != null">
+                AND id = #{entity.id}
+            </if>
+            <if test="entity.questionId != null">
+                AND question_id = #{entity.questionId}
+            </if>
+            <if test="entity.optionTitle != null">
+                AND option_title = #{entity.optionTitle}
+            </if>
+            <if test="entity.isCorrect != null">
+                AND is_correct = #{entity.isCorrect}
+            </if>
+            <if test="entity.enabled != null">
+                AND enabled = #{entity.enabled}
+            </if>
+            <if test="entity.modifier != null">
+                AND modifier = #{entity.modifier}
+            </if>
+            <if test="entity.creator != null">
+                AND creator = #{entity.creator}
+            </if>
+            <if test="entity.modified != null">
+                AND modified = #{entity.modified}
+            </if>
+            <if test="entity.created != null">
+                AND created = #{entity.created}
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="sort">
+        <trim prefix="ORDER BY" suffixOverrides=",">
+            <foreach collection="orders" separator="," item="item" index="index">
+                ${item.property} ${item.direction}
+            </foreach>
+        </trim>
+    </sql>
+
+    <sql id="criterion">
+        <foreach collection="conditions.tokens" item="item">
+            <choose>
+                <when test="item.param">#{item.value}</when><otherwise>${item.value}</otherwise>
+            </choose>
+        </foreach>
+    </sql>
+
+    <sql id="limit">
+        LIMIT #{offset}, #{pageSize}
+    </sql>
+
+    <sql id="relationships">
+        <if test="relationships != null">
+            <foreach collection="relationships" item="join" index="index">
+                ${join.type()} ${join.table()} ON ${join.condition()}
+            </foreach>
+        </if>
+    </sql>
+
+    <!-- insert -->
+    <insert id="save" parameterType="com.mifan.quiz.domain.Options" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO options(<include refid="insertColumns"/>) VALUES (<include refid="insertValues"/>)
+    </insert>
+
+    <!-- insert into on duplicate -->
+    <insert id="insertOnDuplicate" parameterType="com.mifan.quiz.domain.Options" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO options(<include refid="insertEntityColumns"/>) VALUES (<include refid="insertEntityValues"/>) ON DUPLICATE KEY UPDATE <include refid="updateValuesByCriterion"/>
+    </insert>
+
+    <!-- insert into on duplicate -->
+    <insert id="saveOrUpdate" parameterType="com.mifan.quiz.domain.Options" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO options(<include refid="insertColumns"/>) VALUES (<include refid="insertValues"/>) ON DUPLICATE KEY UPDATE <include refid="updateValues"/>
+    </insert>
+
+    <!-- delete -->
+    <delete id="delete" parameterType="long">
+        DELETE FROM options WHERE id = #{id}
+    </delete>
+
+    <!-- update -->
+    <update id="update" parameterType="com.mifan.quiz.domain.Options">
+        UPDATE options SET <include refid="updateValues"/> WHERE id = #{id}
+    </update>
+
+    <update id="updateByCriterion" parameterType="com.mifan.quiz.domain.Options">
+        UPDATE options SET <include refid="updateValuesByCriterion"/> WHERE id = #{entity.id} AND <include refid="criterion"></include>
+    </update>
+
+    <update id="updateByMap" parameterType="map">
+        UPDATE options
+        <trim prefix="SET" suffixOverrides=",">
+            <foreach collection="increments" index="index" item="item">
+                ${item.key} = ${item.key} + #{item.value},
+            </foreach>
+            <foreach collection="fields" index="index" item="item">
+                ${item.key} = #{item.value},
+            </foreach>
+        </trim>
+        WHERE id = #{id}
+    </update>
+
+    <!-- select -->
+    <select id="findOne" parameterType="map" resultMap="options">
+        SELECT
+        <include refid="columns"></include>
+        FROM options WHERE id = #{id}
+    </select>
+
+    <select id="findOneByObject" parameterType="map" resultMap="options">
+        SELECT
+        <include refid="columns"></include>
+        FROM options <include refid="simpleConditions"></include>
+    </select>
+
+    <select id="findOneByCriterion" parameterType="map" resultMap="options">
+        SELECT
+        <include refid="columns"></include>
+        FROM options WHERE <include refid="criterion"></include> LIMIT 1
+    </select>
+
+    <select id="findAll" parameterType="map" resultMap="options">
+        SELECT
+        <include refid="columns"></include>
+        FROM options WHERE ${field} IN
+        <foreach collection="ids" open="(" separator="," close=")" index="index" item="item" >
+            ${item}
+        </foreach>
+    </select>
+
+    <select id="findAllByObject" parameterType="map" resultMap="options">
+        SELECT
+        <include refid="columns"></include>
+        FROM options <include refid="simpleConditions"></include>
+    </select>
+
+    <select id="findAllByCriterion" parameterType="map" resultMap="options">
+        SELECT
+        <include refid="columns"></include>
+        FROM options WHERE <include refid="criterion"></include>
+    </select>
+
+    <select id="findPage" parameterType="map" resultMap="options">
+        SELECT
+        <include refid="columns"></include>
+        FROM options <include refid="simpleConditions"></include> <include refid="sort"></include> <include refid="limit"></include>
+    </select>
+
+    <select id="findPageByCriterion" parameterType="map" resultMap="options">
+        SELECT
+        <include refid="columns"></include>
+        FROM options
+        <include refid="relationships"></include>
+        WHERE <include refid="criterion"></include> <include refid="sort"></include> <include refid="limit"></include>
+    </select>
+
+    <select id="count" resultType="long">
+        SELECT COUNT(*) FROM options
+    </select>
+
+    <select id="countByCondition" parameterType="map" resultType="long">
+        SELECT COUNT(*) FROM options <include refid="simpleConditions"></include>
+    </select>
+
+    <select id="countByCriterion" parameterType="map" resultType="long">
+        SELECT COUNT(*) FROM options
+        <include refid="relationships"></include>
+        WHERE <include refid="criterion"></include>
+    </select>
+
+    <select id="exists" parameterType="long" resultType="long">
+        SELECT COUNT(*) FROM options WHERE id = #{id}
+    </select>
+
+</mapper>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <parent>
+        <groupId>com.mifan.quiz</groupId>
+        <artifactId>mifan-quiz</artifactId>
+        <version>1.0.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>mifan-quiz-web</artifactId>
+    <name>mifan-quiz-web</name>
+    <url>http://maven.apache.org</url>
+    
+    <properties>
+        <start-class>com.mifan.Application</start-class>
+    </properties>
+    
+    <dependencies>
+        <dependency>
+            <groupId>com.mifan.quiz</groupId>
+            <artifactId>mifan-quiz-service</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.moonframework</groupId>
+            <artifactId>moon-fragment-security</artifactId>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <plugins>
+            <!-- Package as an executable jar -->
+            <!-- The spring-boot-starter-parent POM includes <executions> configuration to bind the repackage goal. -->
+            <!-- If you are not using the parent POM you will need to declare this configuration yourself. See the plugin documentation for details. -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
+                <configuration>
+                    <mainClass>${start-class}</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

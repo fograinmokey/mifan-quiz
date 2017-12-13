@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mifan.quiz.domain.QuizCount">
+
+    <!-- result map -->
+    <resultMap id="quizCount" type="com.mifan.quiz.domain.QuizCount">
+        <id property="id" column="id" javaType="long"/>
+        <result property="quizId" column="quiz_id" javaType="long"/>
+        <result property="peoples" column="peoples" javaType="int"/>
+        <result property="first" column="first" javaType="int"/>
+        <result property="second" column="second" javaType="int"/>
+        <result property="third" column="third" javaType="int"/>
+        <result property="fourth" column="fourth" javaType="int"/>
+        <result property="fifth" column="fifth" javaType="int"/>
+        <result property="sixth" column="sixth" javaType="int"/>
+        <result property="seventh" column="seventh" javaType="int"/>
+        <result property="eighth" column="eighth" javaType="int"/>
+        <result property="ninth" column="ninth" javaType="int"/>
+        <result property="tenth" column="tenth" javaType="int"/>
+        <result property="enabled" column="enabled" javaType="int"/>
+        <result property="modified" column="modified" javaType="date"/>
+        <result property="created" column="created" javaType="date"/>
+    </resultMap>
+
+    <!-- sql -->
+    <sql id="columns">
+        <choose>
+            <when test="fields != null and fields.size != 0">
+                <foreach collection="fields" separator="," item="item" index="index">
+                    ${item.fullname}
+                </foreach>
+            </when>
+            <otherwise>
+                id, quiz_id, peoples, first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, enabled, modified, created 
+            </otherwise>
+        </choose>
+    </sql>
+
+    <sql id="insertColumns">
+        <trim suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="quizId != null">
+                quiz_id,
+            </if>
+            <if test="peoples != null">
+                peoples,
+            </if>
+            <if test="first != null">
+                first,
+            </if>
+            <if test="second != null">
+                second,
+            </if>
+            <if test="third != null">
+                third,
+            </if>
+            <if test="fourth != null">
+                fourth,
+            </if>
+            <if test="fifth != null">
+                fifth,
+            </if>
+            <if test="sixth != null">
+                sixth,
+            </if>
+            <if test="seventh != null">
+                seventh,
+            </if>
+            <if test="eighth != null">
+                eighth,
+            </if>
+            <if test="ninth != null">
+                ninth,
+            </if>
+            <if test="tenth != null">
+                tenth,
+            </if>
+            <if test="enabled != null">
+                enabled,
+            </if>
+            <if test="modified != null">
+                modified,
+            </if>
+            <if test="created != null">
+                created,
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="insertEntityColumns">
+        <trim suffixOverrides=",">
+            <if test="insert.id != null">
+                id,
+            </if>
+            <if test="insert.quizId != null">
+                quiz_id,
+            </if>
+            <if test="insert.peoples != null">
+                peoples,
+            </if>
+            <if test="insert.first != null">
+                first,
+            </if>
+            <if test="insert.second != null">
+                second,
+            </if>
+            <if test="insert.third != null">
+                third,
+            </if>
+            <if test="insert.fourth != null">
+                fourth,
+            </if>
+            <if test="insert.fifth != null">
+                fifth,
+            </if>
+            <if test="insert.sixth != null">
+                sixth,
+            </if>
+            <if test="insert.seventh != null">
+                seventh,
+            </if>
+            <if test="insert.eighth != null">
+                eighth,
+            </if>
+            <if test="insert.ninth != null">
+                ninth,
+            </if>
+            <if test="insert.tenth != null">
+                tenth,
+            </if>
+            <if test="insert.enabled != null">
+                enabled,
+            </if>
+            <if test="insert.modified != null">
+                modified,
+            </if>
+            <if test="insert.created != null">
+                created,
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="insertValues">
+        <trim suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="quizId != null">
+                #{quizId},
+            </if>
+            <if test="peoples != null">
+                #{peoples},
+            </if>
+            <if test="first != null">
+                #{first},
+            </if>
+            <if test="second != null">
+                #{second},
+            </if>
+            <if test="third != null">
+                #{third},
+            </if>
+            <if test="fourth != null">
+                #{fourth},
+            </if>
+            <if test="fifth != null">
+                #{fifth},
+            </if>
+            <if test="sixth != null">
+                #{sixth},
+            </if>
+            <if test="seventh != null">
+                #{seventh},
+            </if>
+            <if test="eighth != null">
+                #{eighth},
+            </if>
+            <if test="ninth != null">
+                #{ninth},
+            </if>
+            <if test="tenth != null">
+                #{tenth},
+            </if>
+            <if test="enabled != null">
+                #{enabled},
+            </if>
+            <if test="modified != null">
+                #{modified},
+            </if>
+            <if test="created != null">
+                #{created},
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="insertEntityValues">
+        <trim suffixOverrides=",">
+            <if test="insert.id != null">
+                #{insert.id},
+            </if>
+            <if test="insert.quizId != null">
+                #{insert.quizId},
+            </if>
+            <if test="insert.peoples != null">
+                #{insert.peoples},
+            </if>
+            <if test="insert.first != null">
+                #{insert.first},
+            </if>
+            <if test="insert.second != null">
+                #{insert.second},
+            </if>
+            <if test="insert.third != null">
+                #{insert.third},
+            </if>
+            <if test="insert.fourth != null">
+                #{insert.fourth},
+            </if>
+            <if test="insert.fifth != null">
+                #{insert.fifth},
+            </if>
+            <if test="insert.sixth != null">
+                #{insert.sixth},
+            </if>
+            <if test="insert.seventh != null">
+                #{insert.seventh},
+            </if>
+            <if test="insert.eighth != null">
+                #{insert.eighth},
+            </if>
+            <if test="insert.ninth != null">
+                #{insert.ninth},
+            </if>
+            <if test="insert.tenth != null">
+                #{insert.tenth},
+            </if>
+            <if test="insert.enabled != null">
+                #{insert.enabled},
+            </if>
+            <if test="insert.modified != null">
+                #{insert.modified},
+            </if>
+            <if test="insert.created != null">
+                #{insert.created},
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="updateValues">
+        <trim suffixOverrides=",">
+            <if test="quizId != null">
+                quiz_id = #{quizId},
+            </if>
+            <if test="peoples != null">
+                peoples = #{peoples},
+            </if>
+            <if test="first != null">
+                first = #{first},
+            </if>
+            <if test="second != null">
+                second = #{second},
+            </if>
+            <if test="third != null">
+                third = #{third},
+            </if>
+            <if test="fourth != null">
+                fourth = #{fourth},
+            </if>
+            <if test="fifth != null">
+                fifth = #{fifth},
+            </if>
+            <if test="sixth != null">
+                sixth = #{sixth},
+            </if>
+            <if test="seventh != null">
+                seventh = #{seventh},
+            </if>
+            <if test="eighth != null">
+                eighth = #{eighth},
+            </if>
+            <if test="ninth != null">
+                ninth = #{ninth},
+            </if>
+            <if test="tenth != null">
+                tenth = #{tenth},
+            </if>
+            <if test="enabled != null">
+                enabled = #{enabled},
+            </if>
+            <if test="modified != null">
+                modified = #{modified},
+            </if>
+            <if test="created != null">
+                created = #{created},
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="updateValuesByCriterion">
+        <trim suffixOverrides=",">
+            <if test="entity.quizId != null">
+                quiz_id = #{entity.quizId},
+            </if>
+            <if test="entity.peoples != null">
+                peoples = #{entity.peoples},
+            </if>
+            <if test="entity.first != null">
+                first = #{entity.first},
+            </if>
+            <if test="entity.second != null">
+                second = #{entity.second},
+            </if>
+            <if test="entity.third != null">
+                third = #{entity.third},
+            </if>
+            <if test="entity.fourth != null">
+                fourth = #{entity.fourth},
+            </if>
+            <if test="entity.fifth != null">
+                fifth = #{entity.fifth},
+            </if>
+            <if test="entity.sixth != null">
+                sixth = #{entity.sixth},
+            </if>
+            <if test="entity.seventh != null">
+                seventh = #{entity.seventh},
+            </if>
+            <if test="entity.eighth != null">
+                eighth = #{entity.eighth},
+            </if>
+            <if test="entity.ninth != null">
+                ninth = #{entity.ninth},
+            </if>
+            <if test="entity.tenth != null">
+                tenth = #{entity.tenth},
+            </if>
+            <if test="entity.enabled != null">
+                enabled = #{entity.enabled},
+            </if>
+            <if test="entity.modified != null">
+                modified = #{entity.modified},
+            </if>
+            <if test="entity.created != null">
+                created = #{entity.created},
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="simpleConditions">
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="entity.id != null">
+                AND id = #{entity.id}
+            </if>
+            <if test="entity.quizId != null">
+                AND quiz_id = #{entity.quizId}
+            </if>
+            <if test="entity.peoples != null">
+                AND peoples = #{entity.peoples}
+            </if>
+            <if test="entity.first != null">
+                AND first = #{entity.first}
+            </if>
+            <if test="entity.second != null">
+                AND second = #{entity.second}
+            </if>
+            <if test="entity.third != null">
+                AND third = #{entity.third}
+            </if>
+            <if test="entity.fourth != null">
+                AND fourth = #{entity.fourth}
+            </if>
+            <if test="entity.fifth != null">
+                AND fifth = #{entity.fifth}
+            </if>
+            <if test="entity.sixth != null">
+                AND sixth = #{entity.sixth}
+            </if>
+            <if test="entity.seventh != null">
+                AND seventh = #{entity.seventh}
+            </if>
+            <if test="entity.eighth != null">
+                AND eighth = #{entity.eighth}
+            </if>
+            <if test="entity.ninth != null">
+                AND ninth = #{entity.ninth}
+            </if>
+            <if test="entity.tenth != null">
+                AND tenth = #{entity.tenth}
+            </if>
+            <if test="entity.enabled != null">
+                AND enabled = #{entity.enabled}
+            </if>
+            <if test="entity.modified != null">
+                AND modified = #{entity.modified}
+            </if>
+            <if test="entity.created != null">
+                AND created = #{entity.created}
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="sort">
+        <trim prefix="ORDER BY" suffixOverrides=",">
+            <foreach collection="orders" separator="," item="item" index="index">
+                ${item.property} ${item.direction}
+            </foreach>
+        </trim>
+    </sql>
+
+    <sql id="criterion">
+        <foreach collection="conditions.tokens" item="item">
+            <choose>
+                <when test="item.param">#{item.value}</when><otherwise>${item.value}</otherwise>
+            </choose>
+        </foreach>
+    </sql>
+
+    <sql id="limit">
+        LIMIT #{offset}, #{pageSize}
+    </sql>
+
+    <sql id="relationships">
+        <if test="relationships != null">
+            <foreach collection="relationships" item="join" index="index">
+                ${join.type()} ${join.table()} ON ${join.condition()}
+            </foreach>
+        </if>
+    </sql>
+
+    <!-- insert -->
+    <insert id="save" parameterType="com.mifan.quiz.domain.QuizCount" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO quiz_count(<include refid="insertColumns"/>) VALUES (<include refid="insertValues"/>)
+    </insert>
+
+    <!-- insert into on duplicate -->
+    <insert id="insertOnDuplicate" parameterType="com.mifan.quiz.domain.QuizCount" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO quiz_count(<include refid="insertEntityColumns"/>) VALUES (<include refid="insertEntityValues"/>) ON DUPLICATE KEY UPDATE <include refid="updateValuesByCriterion"/>
+    </insert>
+
+    <!-- insert into on duplicate -->
+    <insert id="saveOrUpdate" parameterType="com.mifan.quiz.domain.QuizCount" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO quiz_count(<include refid="insertColumns"/>) VALUES (<include refid="insertValues"/>) ON DUPLICATE KEY UPDATE <include refid="updateValues"/>
+    </insert>
+
+    <!-- delete -->
+    <delete id="delete" parameterType="long">
+        DELETE FROM quiz_count WHERE id = #{id}
+    </delete>
+
+    <!-- update -->
+    <update id="update" parameterType="com.mifan.quiz.domain.QuizCount">
+        UPDATE quiz_count SET <include refid="updateValues"/> WHERE id = #{id}
+    </update>
+
+    <update id="updateByCriterion" parameterType="com.mifan.quiz.domain.QuizCount">
+        UPDATE quiz_count SET <include refid="updateValuesByCriterion"/> WHERE id = #{entity.id} AND <include refid="criterion"></include>
+    </update>
+
+    <update id="updateByMap" parameterType="map">
+        UPDATE quiz_count
+        <trim prefix="SET" suffixOverrides=",">
+            <foreach collection="increments" index="index" item="item">
+                ${item.key} = ${item.key} + #{item.value},
+            </foreach>
+            <foreach collection="fields" index="index" item="item">
+                ${item.key} = #{item.value},
+            </foreach>
+        </trim>
+        WHERE id = #{id}
+    </update>
+
+    <!-- select -->
+    <select id="findOne" parameterType="map" resultMap="quizCount">
+        SELECT
+        <include refid="columns"></include>
+        FROM quiz_count WHERE id = #{id}
+    </select>
+
+    <select id="findOneByObject" parameterType="map" resultMap="quizCount">
+        SELECT
+        <include refid="columns"></include>
+        FROM quiz_count <include refid="simpleConditions"></include>
+    </select>
+
+    <select id="findOneByCriterion" parameterType="map" resultMap="quizCount">
+        SELECT
+        <include refid="columns"></include>
+        FROM quiz_count WHERE <include refid="criterion"></include> LIMIT 1
+    </select>
+
+    <select id="findAll" parameterType="map" resultMap="quizCount">
+        SELECT
+        <include refid="columns"></include>
+        FROM quiz_count WHERE ${field} IN
+        <foreach collection="ids" open="(" separator="," close=")" index="index" item="item" >
+            ${item}
+        </foreach>
+    </select>
+
+    <select id="findAllByObject" parameterType="map" resultMap="quizCount">
+        SELECT
+        <include refid="columns"></include>
+        FROM quiz_count <include refid="simpleConditions"></include>
+    </select>
+
+    <select id="findAllByCriterion" parameterType="map" resultMap="quizCount">
+        SELECT
+        <include refid="columns"></include>
+        FROM quiz_count WHERE <include refid="criterion"></include>
+    </select>
+
+    <select id="findPage" parameterType="map" resultMap="quizCount">
+        SELECT
+        <include refid="columns"></include>
+        FROM quiz_count <include refid="simpleConditions"></include> <include refid="sort"></include> <include refid="limit"></include>
+    </select>
+
+    <select id="findPageByCriterion" parameterType="map" resultMap="quizCount">
+        SELECT
+        <include refid="columns"></include>
+        FROM quiz_count
+        <include refid="relationships"></include>
+        WHERE <include refid="criterion"></include> <include refid="sort"></include> <include refid="limit"></include>
+    </select>
+
+    <select id="count" resultType="long">
+        SELECT COUNT(*) FROM quiz_count
+    </select>
+
+    <select id="countByCondition" parameterType="map" resultType="long">
+        SELECT COUNT(*) FROM quiz_count <include refid="simpleConditions"></include>
+    </select>
+
+    <select id="countByCriterion" parameterType="map" resultType="long">
+        SELECT COUNT(*) FROM quiz_count
+        <include refid="relationships"></include>
+        WHERE <include refid="criterion"></include>
+    </select>
+
+    <select id="exists" parameterType="long" resultType="long">
+        SELECT COUNT(*) FROM quiz_count WHERE id = #{id}
+    </select>
+
+</mapper>
