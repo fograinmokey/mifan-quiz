@@ -4,6 +4,7 @@ import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.moonframework.web.core.RestfulController;
 import org.moonframework.web.jsonapi.Response;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,5 +30,11 @@ public class QuizsController extends RestfulController<Quizs> {
             @RequestParam(required = false) String[] include) {
                 
         return super.doGetPage(page, size, sort, include);
+    }
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @Override
+    public ResponseEntity<Response> doGet(@PathVariable Long id,
+            @RequestParam(required = false) String[] include) {
+        return super.doGet(id, include);
     }
 }
