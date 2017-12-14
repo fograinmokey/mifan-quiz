@@ -1,6 +1,11 @@
 package com.mifan.quiz.domain;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 import org.moonframework.model.mybatis.domain.BaseEntity;
+import org.moonframework.validation.ValidationGroups.Post;
 
 /**
  * @author ZYW
@@ -18,7 +23,10 @@ public class Options extends BaseEntity {
     private static final long serialVersionUID = -7541523219648103844L;
 
     private Long questionId;
+    @NotBlank(groups = {Post.class}, message = "NotNull.Options.optionTitle")
     private String optionTitle;
+    @NotNull(groups = {Post.class}, message = "NotNull.Options.isCorrect")
+    @Range(min = 0, max = 1, groups = {Post.class}, message = "{Error.Options.isCorrect}")
     private Integer isCorrect;
 
     public Options() {

@@ -1,6 +1,12 @@
 package com.mifan.quiz.domain;
 
+import java.util.List;
+
+import javax.validation.Valid;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.moonframework.model.mybatis.domain.BaseEntity;
+import org.moonframework.validation.ValidationGroups.Post;
 
 /**
  * @author ZYW
@@ -19,11 +25,17 @@ public class Quizs extends BaseEntity {
 
     private static final long serialVersionUID = 2554034364669780132L;
 
+    @NotBlank(groups = {Post.class}, message = "NotNull.Quizs.title")
     private String title;
     private String description;
+    @NotBlank(groups = {Post.class}, message = "NotNull.Quizs.backImg")
     private String backImg;
     private Integer state;
     private Integer questionNum;
+    
+    @NotEmpty(groups = {Post.class}, message = "NotEmpty.Quizs.questions")
+    @Valid
+    private List<Questions> questions;
 
     public Quizs() {
     }
@@ -96,6 +108,14 @@ public class Quizs extends BaseEntity {
      */
     public void setQuestionNum(Integer questionNum) {
         this.questionNum = questionNum;
+    }
+
+    public List<Questions> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Questions> questions) {
+        this.questions = questions;
     }
 
 }

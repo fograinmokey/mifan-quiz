@@ -1,6 +1,16 @@
 package com.mifan.quiz.domain;
 
+import java.util.List;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Range;
 import org.moonframework.model.mybatis.domain.BaseEntity;
+import org.moonframework.validation.ValidationGroups.Post;
 
 /**
  * @author ZYW
@@ -19,9 +29,18 @@ public class Questions extends BaseEntity {
     private static final long serialVersionUID = 5944281008955464067L;
 
     private Long quizId;
+    @NotBlank(groups = {Post.class}, message = "NotNull.Questions.questionTitle")
     private String questionTitle;
+    @NotNull(groups = {Post.class}, message = "NotNull.Questions.type")
+    @Range(min = 1, max = 2, groups = {Post.class}, message = "{Error.Questions.type}")
     private Integer type;
+    @NotNull(groups = {Post.class}, message = "NotNull.Questions.displayOrder")
+    @Min(groups = {Post.class}, message = "Error.Questions.displayOrder", value = 1)
     private Integer displayOrder;
+    
+    @NotEmpty(groups = {Post.class}, message = "NotEmpty.Questions.options")
+    @Valid
+    private List<Options> options;
 
     public Questions() {
     }
@@ -83,4 +102,11 @@ public class Questions extends BaseEntity {
         this.displayOrder = displayOrder;
     }
 
+    public List<Options> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<Options> options) {
+        this.options = options;
+    }
 }
