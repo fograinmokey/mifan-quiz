@@ -19,7 +19,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 /**
  * @author ZYW
  * 2017年12月13日
- * 哈哈啥事都好好的
+ * 哈哈啥事都好好的哈哈哈哈红豆沙单身快乐回复大厦开两会
  */
 @RestController
 @RequestMapping("/quizs")
