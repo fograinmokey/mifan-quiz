@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.moonframework.model.mybatis.criterion.Restrictions;
+import org.moonframework.model.mybatis.domain.Fields;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,15 +21,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class OptionsServiceImpl extends BaseServiceAdapter<Options, OptionsDao> implements OptionsService {
     
+    @Override
     public int saveOptions(List<Options> entities) {
         List<Options> updates = entities.stream().filter(q -> q.getId() != null).collect(Collectors.toList());
         List<Long> updateIds = updates.stream().map(q -> q.getId()).collect(Collectors.toList());
-        if(CollectionUtils.isNotEmpty(updates)) {
-            super.update(updates);
-        }
-        Options one = entities.get(0);
-//        TODO  明天继续
+        super.update(updates);
         
+        List<Options> olds = super.findAll(Restrictions.eq(Options.QUESTION_ID, entities.get(0).getQuestionId()), Fields.builder().add(Options.ID).build());
+        if(CollectionUtils.isNotEmpty(olds)) {
+            List<Long> oldIds = olds.stream().map(o -> o.getId()).collect(Collectors.toList());
+            oldIds.removeAll(updateIds);
+            if(CollectionUtils.isNotEmpty(oldIds)) {
+                super.delete(oldIds);
+            }
+        }
+        
+        List<Options> adds = entities.stream().filter(o -> o.getId() == null).collect(Collectors.toList());
+        super.save(adds);
         
         return 1;
     }

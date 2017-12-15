@@ -4,6 +4,7 @@ import com.mifan.quiz.dao.QuestionsDao;
 import com.mifan.quiz.domain.Options;
 import com.mifan.quiz.domain.Questions;
 import com.mifan.quiz.service.BaseServiceAdapter;
+import com.mifan.quiz.service.OptionsService;
 import com.mifan.quiz.service.QuestionsService;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.moonframework.model.mybatis.criterion.Restrictions;
 import org.moonframework.model.mybatis.domain.Fields;
 import org.moonframework.model.mybatis.service.Services;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,16 +25,17 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class QuestionsServiceImpl extends BaseServiceAdapter<Questions, QuestionsDao> implements QuestionsService {
+    @Autowired
+    private OptionsService optionsService;
     
     @Override
     public int saveQuestions(List<Questions> entities) {
         List<Questions> updates = entities.stream().filter(q -> q.getId() != null).collect(Collectors.toList());
         List<Long> updateIds = updates.stream().map(q -> q.getId()).collect(Collectors.toList());
-        if(CollectionUtils.isNotEmpty(updates)) {
-            super.update(updates);
-        }
+        super.update(updates);
         
-        List<Questions> olds = super.findAll(Restrictions.eq(Questions.QUIZ_ID, entities.get(0).getQuizId()), Fields.builder().add(Questions.ID).build());
+        List<Questions> olds = super.findAll(Restrictions.and(Restrictions.eq(Questions.QUIZ_ID, entities.get(0).getQuizId()),
+                                    Restrictions.eq(Questions.ENABLED, 1)), Fields.builder().add(Questions.ID).build());
         if(CollectionUtils.isNotEmpty(olds)) {
             List<Long> oldIds = olds.stream().map(q -> q.getId()).collect(Collectors.toList());
             oldIds.removeAll(updateIds);
@@ -57,6 +60,7 @@ public class QuestionsServiceImpl extends BaseServiceAdapter<Questions, Question
                 options.add(o);
             }
         }
+        optionsService.saveOptions(options);
         return 1;
     }
 }

@@ -3,6 +3,8 @@ package com.mifan.quiz.domain;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Null;
+
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.moonframework.model.mybatis.domain.BaseEntity;
@@ -30,6 +32,7 @@ public class Quizs extends BaseEntity {
     private String description;
     @NotBlank(groups = {Post.class}, message = "NotNull.Quizs.backImg")
     private String backImg;
+    @Null(groups = {Post.class}, message = "{MustNull.Quizs.state}")
     private Integer state;
     private Integer questionNum;
     
