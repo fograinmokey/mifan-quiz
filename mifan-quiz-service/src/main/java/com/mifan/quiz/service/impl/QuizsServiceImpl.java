@@ -32,10 +32,10 @@ public class QuizsServiceImpl extends BaseServiceAdapter<Quizs, QuizsDao> implem
             entity.setState(0);
             n += super.save(entity);
         }
-        
+        //11111111
         entity.getQuestions().forEach(q -> q.setQuizId(entity.getId()));
         questionsService.saveQuestions(entity.getQuestions());
-        
+        //哇哦，做个测试
         return n;
     }
 }
