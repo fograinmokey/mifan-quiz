@@ -43,7 +43,6 @@ public class QuizsController extends RestfulController<Quizs> {
     }
   @RequestMapping(method = RequestMethod.POST,consumes = APPLICATION_JSON_VALUE,produces = APPLICATION_JSON_VALUE)
   public ResponseEntity<Response> doPost(@RequestBody Data<Quizs> data){
-      //11111111111
       return super.doPost(data);
   }
 }
