@@ -1,6 +1,7 @@
 package com.mifan.quiz.web;
 
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.moonframework.model.mybatis.service.Services;
 import org.moonframework.web.core.RestfulController;
 import org.moonframework.web.jsonapi.Data;
 import org.moonframework.web.jsonapi.Response;
@@ -41,8 +42,23 @@ public class QuizsController extends RestfulController<Quizs> {
             @RequestParam(required = false) String[] include) {
         return super.doGet(id, include);
     }
-  @RequestMapping(method = RequestMethod.POST,consumes = APPLICATION_JSON_VALUE,produces = APPLICATION_JSON_VALUE)
-  public ResponseEntity<Response> doPost(@RequestBody Data<Quizs> data){
-      return super.doPost(data);
-  }
+    @RequiresAuthentication
+    @RequestMapping(method = RequestMethod.POST,consumes = APPLICATION_JSON_VALUE,produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<Response> doPost(@RequestBody Data<Quizs> data){
+        if(data.getData().getId() != null) {
+            Quizs quiz = Services.findOne(Quizs.class, data.getData().getId());
+            hasPermissions(quiz.getCreator());
+        }
+        return super.doPost(data);
+    }
+    @RequiresAuthentication
+    @RequestMapping(value = "/{id}",method = RequestMethod.PATCH,
+            consumes = APPLICATION_JSON_VALUE,
+            produces = APPLICATION_JSON_VALUE)
+    @Override
+    public ResponseEntity<Response> doPatch(@PathVariable Long id, @RequestBody Data<Quizs> data){
+        Quizs quiz = Services.findOne(Quizs.class, id);
+        hasPermissions(quiz.getCreator());
+        return super.doPatch(id, data);
+    }
 }

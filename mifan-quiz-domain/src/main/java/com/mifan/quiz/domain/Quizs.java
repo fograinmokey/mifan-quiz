@@ -2,11 +2,13 @@ package com.mifan.quiz.domain;
 
 import java.util.List;
 
+import javax.sound.midi.Patch;
 import javax.validation.Valid;
 import javax.validation.constraints.Null;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Range;
 import org.moonframework.model.mybatis.domain.BaseEntity;
 import org.moonframework.validation.ValidationGroups.Post;
 
@@ -33,10 +35,13 @@ public class Quizs extends BaseEntity {
     @NotBlank(groups = {Post.class}, message = "NotNull.Quizs.backImg")
     private String backImg;
     @Null(groups = {Post.class}, message = "{MustNull.Quizs.state}")
+    @Range(groups = {Patch.class}, message = "{Error.Quizs.state}", min = 1,max = 2)
     private Integer state;
+    @Null(groups = {Post.class,Patch.class}, message = "{MustNull.Quizs.questionNum}")
     private Integer questionNum;
     
     @NotEmpty(groups = {Post.class}, message = "NotEmpty.Quizs.questions")
+    @Null(groups = {Patch.class}, message = "MustNull.Quizs.questions")
     @Valid
     private List<Questions> questions;
 

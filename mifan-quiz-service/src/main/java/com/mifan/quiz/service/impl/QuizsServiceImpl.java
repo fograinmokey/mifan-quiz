@@ -24,6 +24,7 @@ public class QuizsServiceImpl extends BaseServiceAdapter<Quizs, QuizsDao> implem
     @Override
     public int save(Quizs entity) {
         int n = 0;
+        entity.setQuestionNum(entity.getQuestions().size());
         if(entity.getId() != null) {
             n += super.update(entity,Restrictions.eq(Quizs.STATE, 0));//加锁，只能修改状态为待发布的
             if(n == 0)
@@ -32,10 +33,21 @@ public class QuizsServiceImpl extends BaseServiceAdapter<Quizs, QuizsDao> implem
             entity.setState(0);
             n += super.save(entity);
         }
-        //222222
+        
         entity.getQuestions().forEach(q -> q.setQuizId(entity.getId()));
         questionsService.saveQuestions(entity.getQuestions());
-        //哇哦
+        
+        return n;
+    }
+    @Override
+    public int update(Quizs entity) {
+        int n = 0;
+        if(entity.getState() == 1) 
+            n += super.update(entity);
+        else
+            n += super.update(entity,Restrictions.eq(Quizs.STATE, 1));
+        if(n == 0)
+            throw new IllegalStateException("该操作不被允许！");
         return n;
     }
 }
