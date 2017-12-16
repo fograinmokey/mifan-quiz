@@ -1,12 +1,15 @@
 package com.mifan.quiz.service.impl;
 
 import com.mifan.quiz.dao.QuizsDao;
+import com.mifan.quiz.domain.QuizCount;
 import com.mifan.quiz.domain.Quizs;
 import com.mifan.quiz.service.BaseServiceAdapter;
 import com.mifan.quiz.service.QuestionsService;
 import com.mifan.quiz.service.QuizsService;
 
 import org.moonframework.model.mybatis.criterion.Restrictions;
+import org.moonframework.model.mybatis.domain.Field;
+import org.moonframework.model.mybatis.service.Services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +23,14 @@ public class QuizsServiceImpl extends BaseServiceAdapter<Quizs, QuizsDao> implem
     
     @Autowired
     private QuestionsService questionsService;
+    
+   @Override
+    public Quizs queryForObject(Long id, Iterable<? extends Field> fields){
+       Quizs quiz = super.queryForObject(id, fields);
+       QuizCount quizCount = Services.findOne(QuizCount.class, Restrictions.eq(QuizCount.QUIZ_ID, id));
+       quiz.setQuizCount(quizCount);
+       return quiz;
+    }
     
     @Override
     public int save(Quizs entity) {

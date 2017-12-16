@@ -5,6 +5,7 @@ import com.mifan.quiz.domain.Questions;
 import java.util.List;
 
 import org.moonframework.model.mybatis.service.BaseService;
+import org.springframework.data.domain.Page;
 
 /**
  * @author ZYW
@@ -19,4 +20,13 @@ public interface QuestionsService extends BaseService<Questions> {
      * @return
      */
     int saveQuestions(List<Questions> entities);
+    
+    /**
+     * 分页查询试卷的试题
+     * @param quizId
+     * @param page
+     * @param size
+     * @return
+     */
+    public Page<Questions> findAll(Long quizId,int page,int size);
 }

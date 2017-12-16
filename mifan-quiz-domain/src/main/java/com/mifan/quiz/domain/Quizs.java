@@ -44,6 +44,8 @@ public class Quizs extends BaseEntity {
     @Null(groups = {Patch.class}, message = "MustNull.Quizs.questions")
     @Valid
     private List<Questions> questions;
+    
+    private QuizCount quizCount;//问卷其他信息
 
     public Quizs() {
     }
@@ -126,4 +128,11 @@ public class Quizs extends BaseEntity {
         this.questions = questions;
     }
 
+    public QuizCount getQuizCount() {
+        return quizCount;
+    }
+
+    public void setQuizCount(QuizCount quizCount) {
+        this.quizCount = quizCount;
+    }
 }

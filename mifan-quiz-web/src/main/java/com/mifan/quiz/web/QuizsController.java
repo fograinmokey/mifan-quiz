@@ -36,6 +36,10 @@ public class QuizsController extends RestfulController<Quizs> {
                 
         return super.doGetPage(page, size, sort, include);
     }
+//    @RequestMapping(value = "/{id}/questions", method = RequestMethod.GET)
+//    public ResponseEntity<Response> doGetWithQuestions(@PathVariable Long id) {
+//        return ResponseEntity.ok(Responses.builder().data(topics));
+//    }
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @Override
     public ResponseEntity<Response> doGet(@PathVariable Long id,

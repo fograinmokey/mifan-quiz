@@ -9,13 +9,18 @@ import com.mifan.quiz.service.QuestionsService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.moonframework.model.mybatis.criterion.Criterion;
 import org.moonframework.model.mybatis.criterion.Restrictions;
 import org.moonframework.model.mybatis.domain.Fields;
+import org.moonframework.model.mybatis.domain.Pages;
 import org.moonframework.model.mybatis.service.Services;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 /**
@@ -27,6 +32,23 @@ import org.springframework.stereotype.Service;
 public class QuestionsServiceImpl extends BaseServiceAdapter<Questions, QuestionsDao> implements QuestionsService {
     @Autowired
     private OptionsService optionsService;
+    
+    @Override
+    public Page<Questions> findAll(Long quizId,int page,int size){
+        PageRequest pageRequest =  Pages.builder().page(page).size(size).sort(Pages.sortBuilder().add(Questions.DISPLAY_ORDER,true).build()).build();
+        Criterion criterion = Restrictions.and(Restrictions.eq(Questions.QUIZ_ID, quizId),Restrictions.eq(Questions.ENABLED, 1));
+        Page<Questions> pages = super.findAll(criterion, pageRequest);
+        
+        if(pages.hasContent()) {
+            List<Questions> questions = pages.getContent();
+            Long[] questionIds = (Long[]) questions.stream().map(Questions::getId).collect(Collectors.toList()).toArray();
+            List<Options> options = Services.findAll(Options.class, Restrictions.in(Options.QUESTION_ID, questionIds));
+            Map<Long,List<Options>> map = options.stream().collect(Collectors.groupingBy(Options::getQuestionId));
+            questions.stream().forEach(q -> q.setOptions(map.get(q.getId())));
+        }
+        
+        return pages;
+    }
     
     @Override
     public int saveQuestions(List<Questions> entities) {
