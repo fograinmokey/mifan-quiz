@@ -2,7 +2,6 @@ package com.mifan.quiz.web;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.moonframework.web.core.RestfulController;
 import org.moonframework.web.jsonapi.Response;
 import org.moonframework.web.jsonapi.Responses;
@@ -28,7 +27,7 @@ public class QuestionsController extends RestfulController<Questions> {
     @Autowired
     private QuestionsService questionsService;
     
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<Response> doGetPageByQuiz(
             @RequestParam(required = false, name = "page[number]", defaultValue = "1") int page,
