@@ -2,7 +2,6 @@ package com.mifan.quiz.domain;
 
 import java.util.List;
 
-import javax.sound.midi.Patch;
 import javax.validation.Valid;
 import javax.validation.constraints.Null;
 
@@ -10,6 +9,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 import org.moonframework.model.mybatis.domain.BaseEntity;
+import org.moonframework.validation.ValidationGroups.Patch;
 import org.moonframework.validation.ValidationGroups.Post;
 
 /**

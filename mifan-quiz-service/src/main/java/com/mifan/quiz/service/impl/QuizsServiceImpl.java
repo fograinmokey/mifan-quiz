@@ -1,11 +1,14 @@
 package com.mifan.quiz.service.impl;
 
 import com.mifan.quiz.dao.QuizsDao;
+import com.mifan.quiz.domain.Questions;
 import com.mifan.quiz.domain.QuizCount;
 import com.mifan.quiz.domain.Quizs;
 import com.mifan.quiz.service.BaseServiceAdapter;
 import com.mifan.quiz.service.QuestionsService;
 import com.mifan.quiz.service.QuizsService;
+
+import java.util.List;
 
 import org.moonframework.model.mybatis.criterion.Restrictions;
 import org.moonframework.model.mybatis.domain.Field;
@@ -24,12 +27,26 @@ public class QuizsServiceImpl extends BaseServiceAdapter<Quizs, QuizsDao> implem
     @Autowired
     private QuestionsService questionsService;
     
-   @Override
+    @Override
     public Quizs queryForObject(Long id, Iterable<? extends Field> fields){
        Quizs quiz = super.queryForObject(id, fields);
+       if(quiz == null)
+           return quiz;
+       if(quiz.getState() != 1 || quiz.getEnabled() == 0) {
+           return null;
+       }
        QuizCount quizCount = Services.findOne(QuizCount.class, Restrictions.eq(QuizCount.QUIZ_ID, id));
        quiz.setQuizCount(quizCount);
        return quiz;
+    }
+    @Override
+    public Quizs findOneForAdmin(Long id) {
+        Quizs quiz = super.queryForObject(id);
+        if(quiz == null)
+            return quiz;
+        List<Questions> questions = questionsService.findAll(id, 1, quiz.getQuestionNum()+10).getContent();
+        quiz.setQuestions(questions);
+        return quiz;
     }
     
     @Override

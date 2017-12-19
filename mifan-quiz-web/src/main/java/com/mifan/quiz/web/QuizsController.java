@@ -1,10 +1,15 @@
 package com.mifan.quiz.web;
 
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.moonframework.model.mybatis.criterion.Criterion;
+import org.moonframework.model.mybatis.criterion.Restrictions;
+import org.moonframework.model.mybatis.domain.BaseEntity;
 import org.moonframework.model.mybatis.service.Services;
 import org.moonframework.web.core.RestfulController;
 import org.moonframework.web.jsonapi.Data;
 import org.moonframework.web.jsonapi.Response;
+import org.moonframework.web.jsonapi.Responses;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mifan.quiz.domain.Quizs;
+import com.mifan.quiz.service.QuizsService;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -24,6 +30,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping("/quizs")
 public class QuizsController extends RestfulController<Quizs> {
+    
+    @Autowired
+    private QuizsService quizsService;
     
     @RequiresAuthentication
     @RequestMapping(method = RequestMethod.GET)
@@ -36,15 +45,18 @@ public class QuizsController extends RestfulController<Quizs> {
                 
         return super.doGetPage(page, size, sort, include);
     }
-//    @RequestMapping(value = "/{id}/questions", method = RequestMethod.GET)
-//    public ResponseEntity<Response> doGetWithQuestions(@PathVariable Long id) {
-//        return ResponseEntity.ok(Responses.builder().data(topics));
-//    }
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @Override
     public ResponseEntity<Response> doGet(@PathVariable Long id,
             @RequestParam(required = false) String[] include) {
         return super.doGet(id, include);
+    }
+    @RequiresAuthentication
+    @RequestMapping(value = "/{id}/admin", method = RequestMethod.GET)
+    public ResponseEntity<Response> doGetForAdmin(@PathVariable Long id) {
+        Quizs quiz = quizsService.findOneForAdmin(id);
+        hasPermissions(quiz.getCreator());
+        return ResponseEntity.ok(Responses.builder().data(quiz));
     }
     @RequiresAuthentication
     @RequestMapping(method = RequestMethod.POST,consumes = APPLICATION_JSON_VALUE,produces = APPLICATION_JSON_VALUE)
@@ -55,14 +67,25 @@ public class QuizsController extends RestfulController<Quizs> {
         }
         return super.doPost(data);
     }
-    @RequiresAuthentication
-    @RequestMapping(value = "/{id}",method = RequestMethod.PATCH,
-            consumes = APPLICATION_JSON_VALUE,
-            produces = APPLICATION_JSON_VALUE)
+//    @RequiresAuthentication
+    @RequestMapping(value = "/{id}",method = RequestMethod.PATCH,consumes = APPLICATION_JSON_VALUE,produces = APPLICATION_JSON_VALUE)
     @Override
     public ResponseEntity<Response> doPatch(@PathVariable Long id, @RequestBody Data<Quizs> data){
         Quizs quiz = Services.findOne(Quizs.class, id);
         hasPermissions(quiz.getCreator());
         return super.doPatch(id, data);
+    }
+//  @RequiresAuthentication
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @Override
+    public ResponseEntity<Response> doDelete(@PathVariable Long id) {
+        Quizs quiz = Services.findOne(Quizs.class, id);
+        hasPermissions(quiz.getCreator());
+        return super.doDelete(id);
+    }
+    protected Criterion criterion(Criterion criterion) {
+        return Restrictions.and(Restrictions.eq(Quizs.CREATOR, getCurrentUserId()),
+                Restrictions.eq(BaseEntity.ENABLED, 1),
+                criterion);
     }
 }
