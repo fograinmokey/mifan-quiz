@@ -9,4 +9,6 @@ import org.moonframework.model.mybatis.service.BaseService;
  * @since 2017-12-12
  */
 public interface AnswersService extends BaseService<Answers> {
+	
+	public  Answers saveAnswers(Answers entity) ;
 }

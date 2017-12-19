@@ -22,6 +22,16 @@ public class Answers extends BaseEntity {
     private Long questionId;
     private String answers;
     private Integer isRight;
+    
+    private String sessionCode ;  //随机码
+    
+    public String getSessionCode() {
+		return sessionCode;
+	}
+
+	public void setSessionCode(String sessionCode) {
+		this.sessionCode = sessionCode;
+	}
 
     public Answers() {
     }
