@@ -8,6 +8,7 @@ import com.mifan.quiz.service.QuizSessionService;
 
 import java.util.UUID;
 
+import org.moonframework.model.mybatis.domain.Fields;
 import org.moonframework.model.mybatis.service.Services;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +22,9 @@ public class QuizSessionServiceImpl extends BaseServiceAdapter<QuizSession, Quiz
     
     @Override
     public int save(QuizSession entity) {
-        if(!Services.exists(Quizs.class, entity.getQuizId()))
-            throw new IllegalStateException("参数不存在！");
+        Quizs quiz = Services.findOne(Quizs.class, entity.getQuizId(),Fields.builder().add(Quizs.STATE).build());
+        if(quiz == null || quiz.getState() != 1)
+            throw new IllegalStateException("问卷不存在！");
         
         String sessionCode = UUID.randomUUID().toString();
         entity.setSessionCode(sessionCode);
