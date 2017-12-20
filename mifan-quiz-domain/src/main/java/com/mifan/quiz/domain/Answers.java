@@ -1,7 +1,10 @@
 package com.mifan.quiz.domain;
 
+import java.util.List;
+
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.moonframework.model.mybatis.domain.BaseEntity;
 import org.moonframework.validation.ValidationGroups.Post;
 
@@ -30,7 +33,28 @@ public class Answers extends BaseEntity {
     
     private String sessionCode ;  //随机码
     
-    public String getSessionCode() {
+    private Integer allDone ; //是否全部答完
+    
+    @NotEmpty(groups = {Post.class}, message = "NotEmpty.QuizSession.answersList")
+    private List<Long> answersList ;  //用户提交的答案
+    
+    public Integer getAllDone() {
+		return allDone;
+	}
+
+	public void setAllDone(Integer allDone) {
+		this.allDone = allDone;
+	}
+
+	public List<Long> getAnswersList() {
+		return answersList;
+	}
+
+	public void setAnswersList(List<Long> answersList) {
+		this.answersList = answersList;
+	}
+
+	public String getSessionCode() {
 		return sessionCode;
 	}
 

@@ -12,7 +12,6 @@ import org.moonframework.web.core.RestfulController;
 import org.moonframework.web.jsonapi.Data;
 import org.moonframework.web.jsonapi.Response;
 import org.moonframework.web.jsonapi.Responses;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,14 +19,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mifan.quiz.domain.Answers;
-import com.mifan.quiz.service.AnswersService;
 
 @RestController
 @RequestMapping("/answers")
 public class AnswersController extends RestfulController<Answers> {
 	
-     @Autowired	
-     private AnswersService  answersService ;
 	/**
 	   *  提交答案，记录quiz_session，返回是否答对
 	   * @return
@@ -54,6 +50,7 @@ public class AnswersController extends RestfulController<Answers> {
              return ResponseEntity.noContent().build();
          default:
              Map<String, Object> result = new HashMap<>();
+             result.put("allDone", entity.getAllDone());
              result.put("isRight", entity.getIsRight());
              result.put("type", "Answers");
              result.put("id", entity.getId());
