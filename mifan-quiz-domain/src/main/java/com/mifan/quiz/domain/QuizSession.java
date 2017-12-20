@@ -1,6 +1,10 @@
 package com.mifan.quiz.domain;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+
 import org.moonframework.model.mybatis.domain.BaseEntity;
+import org.moonframework.validation.ValidationGroups.Post;
 
 /**
  * @author ZYW
@@ -19,10 +23,15 @@ public class QuizSession extends BaseEntity {
 
     private static final long serialVersionUID = -4799041271117063057L;
 
+    @Null(groups = {Post.class}, message = "{MustNull.QuizSession.sessionCode}")
     private String sessionCode;
+    @NotNull(groups = {Post.class}, message = "{NotNull.QuizSession.quizId}")
     private Long quizId;
+    @Null(groups = {Post.class}, message = "{MustNull.QuizSession.answerNum}")
     private Integer answerNum;
+    @Null(groups = {Post.class}, message = "{MustNull.QuizSession.rightNum}")
     private Integer rightNum;
+    @Null(groups = {Post.class}, message = "{MustNull.QuizSession.allDone}")
     private Integer allDone;
 
     public QuizSession() {
