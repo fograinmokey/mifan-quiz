@@ -40,7 +40,7 @@ public class AnswersServiceImpl extends BaseServiceAdapter<Answers, AnswersDao> 
 		//用户的答案  "1,2,3,4"字符串   转换成集合
 		List<String> results = new ArrayList<>();
 		if (entity.getAnswers().contains(",")) {
-			 results =  Arrays.asList(entity.getAnswers().split(",")); 
+            results =  Arrays.asList(entity.getAnswers().split(",")); 
 		}else {
 			results.add(entity.getAnswers());
 		}

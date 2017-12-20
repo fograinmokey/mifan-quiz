@@ -47,9 +47,9 @@ public class QuizSessionController extends RestfulController<QuizSession> {
 	/**
 	 * 生成sessionCode，（参考）
 	 */
-    @RequestMapping(method = RequestMethod.POST
-            ,consumes = APPLICATION_JSON_VALUE
-            ,produces = APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST,
+            consumes = APPLICATION_JSON_VALUE,
+            produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Response> doPost(@RequestBody Data<QuizSession> data){
         QuizSession entity = data.getData();
         Long userId = getCurrentUserId();

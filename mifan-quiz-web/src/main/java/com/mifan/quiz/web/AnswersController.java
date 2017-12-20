@@ -33,9 +33,9 @@ public class AnswersController extends RestfulController<Answers> {
 	   * @return
 	   */
 	//@RequiresAuthentication
-    @RequestMapping(method = RequestMethod.POST
-            ,consumes = APPLICATION_JSON_VALUE
-            ,produces = APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST,
+            consumes = APPLICATION_JSON_VALUE,
+            produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity<Response> commitAnswers(@RequestBody Data<Answers> data) {
     	  Answers entity = data.getData();
     	  Long userId = getCurrentUserId();

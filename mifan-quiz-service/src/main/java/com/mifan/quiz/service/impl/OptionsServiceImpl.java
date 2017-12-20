@@ -6,6 +6,7 @@ import com.mifan.quiz.service.BaseServiceAdapter;
 import com.mifan.quiz.service.OptionsService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -27,7 +28,9 @@ public class OptionsServiceImpl extends BaseServiceAdapter<Options, OptionsDao> 
         List<Long> updateIds = updates.stream().map(q -> q.getId()).collect(Collectors.toList());
         super.update(updates);
         
-        List<Options> olds = super.findAll(Restrictions.eq(Options.QUESTION_ID, entities.get(0).getQuestionId()), Fields.builder().add(Options.ID).build());
+        Map<Long,List<Options>> map = entities.stream().collect(Collectors.groupingBy(Options::getQuestionId));
+        
+        List<Options> olds = super.findAll(Restrictions.in(Options.QUESTION_ID, map.keySet().toArray()), Fields.builder().add(Options.ID).build());
         if(CollectionUtils.isNotEmpty(olds)) {
             List<Long> oldIds = olds.stream().map(o -> o.getId()).collect(Collectors.toList());
             oldIds.removeAll(updateIds);
