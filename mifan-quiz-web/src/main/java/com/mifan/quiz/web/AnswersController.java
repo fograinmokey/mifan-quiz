@@ -1,5 +1,12 @@
 package com.mifan.quiz.web;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
+import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.moonframework.model.mybatis.service.Services;
 import org.moonframework.validation.ValidationGroups.Post;
 import org.moonframework.web.core.RestfulController;
 import org.moonframework.web.jsonapi.Data;
@@ -26,13 +33,32 @@ public class AnswersController extends RestfulController<Answers> {
 	   * @return
 	   */
 	//@RequiresAuthentication
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST
+            ,consumes = APPLICATION_JSON_VALUE
+            ,produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity<Response> commitAnswers(@RequestBody Data<Answers> data) {
     	  Answers entity = data.getData();
+    	  Long userId = getCurrentUserId();
+          if (userId != null) {
+              entity.setCreator(userId);
+              entity.setModifier(userId);
+          }
           hasError(validate(entity, Post.class));
           afterPostValidate(entity);
-    	Answers answers = answersService.saveAnswers(entity);
-		return ResponseEntity.ok(Responses.builder().data(answers)); 
+    	 switch (Services.save(entityClass, entity)) {
+         case 0:
+             throw new IllegalStateException();
+         case ACCEPTED:
+             return ResponseEntity.accepted().build();
+         case NO_CONTENT:
+             return ResponseEntity.noContent().build();
+         default:
+             Map<String, Object> result = new HashMap<>();
+             result.put("isRight", entity.getIsRight());
+             result.put("type", "Answers");
+             result.put("id", entity.getId());
+             return ResponseEntity.created(URI.create("/answers" + "/" + entity.getId())).body(Responses.builder().data(result));
+     }
 	  }
 
 }

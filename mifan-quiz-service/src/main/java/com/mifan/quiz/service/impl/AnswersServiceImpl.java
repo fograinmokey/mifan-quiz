@@ -27,19 +27,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class AnswersServiceImpl extends BaseServiceAdapter<Answers, AnswersDao> implements AnswersService {
 	
-	@Autowired
-	private QuizSessionService quizSessionService ;
-	
-	public  Answers saveAnswers(Answers entity) {
-      if (entity.getSessionCode() == null || entity.getSessionCode().trim().equals("")) {
-    	  throw new IllegalStateException("该随机码不能为空!");
-		}
-      if (entity.getAnswers() == null || entity.getAnswers().trim().equals("")) {
-    	  throw new IllegalStateException("用户提交答案不能为空!");
-		}
-      if (entity.getQuestionId() == null ) {
-    	  throw new IllegalStateException("问题序号不能为空!");
-	}
+	@Override
+	public int save(Answers entity) {
       
 		//查询正确的选项  考虑到多选题  则查出来就是List集合
 		List<Long> idList = new ArrayList<>();
@@ -76,14 +65,15 @@ public class AnswersServiceImpl extends BaseServiceAdapter<Answers, AnswersDao> 
 		}
 		// 查询问卷  
 		Quizs quizs = Services.findOne(Quizs.class, quizSession.getQuizId());
-		//是否答对
+		//答对题数
 		if (isRight == 1) {
 			quizSession.setRightNum(quizSession.getRightNum()+1);
 		}
-		
+		//答题总数
 		if (quizSession.getAnswerNum() < quizs.getQuestionNum()) {
 		 quizSession.setAnswerNum(quizSession.getAnswerNum()+1);
 		}
+		//答完之后修改 是否全部打完
     	if (quizSession.getAnswerNum() == quizs.getQuestionNum()) {
     		quizSession.setAllDone(1);
 		}
@@ -91,10 +81,9 @@ public class AnswersServiceImpl extends BaseServiceAdapter<Answers, AnswersDao> 
     	//保存答案表
     	entity.setIsRight(isRight);
     	entity.setSessionId(quizSession.getId());
-    	super.save(entity);
-    	quizSessionService.update(quizSession);
-    	 
-		return entity ;
+    	Services.update(QuizSession.class, quizSession);
+    	int n = super.save(entity);
+		return n ;
 	}
 
 	

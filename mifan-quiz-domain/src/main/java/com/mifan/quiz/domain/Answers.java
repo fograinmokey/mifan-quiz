@@ -1,6 +1,9 @@
 package com.mifan.quiz.domain;
 
+import javax.validation.constraints.NotNull;
+
 import org.moonframework.model.mybatis.domain.BaseEntity;
+import org.moonframework.validation.ValidationGroups.Post;
 
 /**
  * @author ZYW
@@ -19,7 +22,9 @@ public class Answers extends BaseEntity {
     private static final long serialVersionUID = 3763884033459856899L;
 
     private Long sessionId;
+    @NotNull(groups = {Post.class}, message = "{MustNull.QuizSession.questionId}")
     private Long questionId;
+    @NotNull(groups = {Post.class}, message = "{MustNull.QuizSession.answers}")
     private String answers;
     private Integer isRight;
     
