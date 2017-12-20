@@ -27,7 +27,6 @@ public class Answers extends BaseEntity {
     private Long sessionId;
     @NotNull(groups = {Post.class}, message = "{MustNull.QuizSession.questionId}")
     private Long questionId;
-    @NotNull(groups = {Post.class}, message = "{MustNull.QuizSession.answers}")
     private String answers;
     private Integer isRight;
     

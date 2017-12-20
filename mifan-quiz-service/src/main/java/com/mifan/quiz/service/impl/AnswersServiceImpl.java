@@ -8,16 +8,13 @@ import com.mifan.quiz.domain.QuizSession;
 import com.mifan.quiz.domain.Quizs;
 import com.mifan.quiz.service.AnswersService;
 import com.mifan.quiz.service.BaseServiceAdapter;
-import com.mifan.quiz.service.QuizSessionService;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.moonframework.model.mybatis.criterion.Criterion;
 import org.moonframework.model.mybatis.criterion.Restrictions;
 import org.moonframework.model.mybatis.service.Services;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
