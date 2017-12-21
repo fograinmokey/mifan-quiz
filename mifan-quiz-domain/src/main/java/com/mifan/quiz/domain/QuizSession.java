@@ -1,5 +1,7 @@
 package com.mifan.quiz.domain;
 
+import java.util.List;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
@@ -36,7 +38,17 @@ public class QuizSession extends BaseEntity {
     
     private float score ;  //当前得分
     
-    private QuizCount count ;
+    private List<Questions> questions;
+    
+    public List<Questions> getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(List<Questions> questions) {
+		this.questions = questions;
+	}
+
+	private QuizCount count ;
     
 	public float getScore() {
 		return score;

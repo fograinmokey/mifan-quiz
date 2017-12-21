@@ -5,6 +5,7 @@ import com.mifan.quiz.domain.Answers;
 import com.mifan.quiz.domain.Options;
 import com.mifan.quiz.domain.Questions;
 import com.mifan.quiz.domain.QuizCount;
+import com.mifan.quiz.domain.QuizSession;
 import com.mifan.quiz.service.AnswersService;
 import com.mifan.quiz.service.BaseServiceAdapter;
 import com.mifan.quiz.service.QuestionsService;
@@ -18,10 +19,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.moonframework.model.mybatis.criterion.Criterion;
 import org.moonframework.model.mybatis.criterion.Restrictions;
+import org.moonframework.model.mybatis.domain.Pages;
 import org.moonframework.model.mybatis.service.Services;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 /**
@@ -107,6 +113,48 @@ public class QuizCountServiceImpl extends BaseServiceAdapter<QuizCount, QuizCoun
 		    }
 			return questions; 
 			}
+	
+	
+	/**
+	 * 分页展示问卷答案
+	 * @param quizId
+	 * @param page
+	 * @param size
+	 * @return
+	 */
+	@Override
+	public Page<QuizSession> findAllQuizs(Long quizId, int page, int size) {
+        PageRequest pageRequest =  Pages.builder().page(page).size(size).build();
+        Criterion criterion = Restrictions.eq(QuizSession.QUIZ_ID, quizId);
+        Page<QuizSession> pages = Services.findAll(QuizSession.class, criterion, pageRequest);
+
+        if(pages.hasContent()) {
+            List<QuizSession> quizSession = pages.getContent();
+            //通过QuizSession取session_id
+            Long[] sessionIds = quizSession.stream().map(QuizSession::getId).collect(Collectors.toList()).toArray(new Long[quizSession.size()]);
+
+            //用sessionIds取出answers
+            List<Answers> answers = Services.findAll(Answers.class, Restrictions.in(Answers.SESSION_ID, sessionIds));
+            
+            //用answers取出questionids
+            Long[] questionids = answers.stream().map(Answers::getQuestionId).collect(Collectors.toList()).toArray(new Long[answers.size()]);
+            
+            //用questionids查找Questions
+            List<Questions> questions = Services.findAll(Questions.class, Restrictions.in(Questions.ID, questionids));	
+            
+            
+            //没有做完
+            
+            Map<Long,List<Questions>> map = questions.stream().collect(Collectors.groupingBy(Questions::getId));
+            quizSession.stream().forEach(q -> q.setQuestions(map.get(q.getId())));
+        }
+        
+        return pages;
+    }
+	
+	
+	
+	}
 
 
-}
+

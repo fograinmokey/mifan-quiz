@@ -2,7 +2,10 @@ package com.mifan.quiz.service;
 
 import com.mifan.quiz.domain.Questions;
 import com.mifan.quiz.domain.QuizCount;
+import com.mifan.quiz.domain.QuizSession;
+
 import org.moonframework.model.mybatis.service.BaseService;
+import org.springframework.data.domain.Page;
 
 /**
  * @author ZYW
@@ -25,4 +28,13 @@ public interface QuizCountService extends BaseService<QuizCount> {
      * @return
      */
     public Questions optionsCount(Long optCountquesId);
+    
+    /**
+     * 分页展示问卷答案
+     * @param quizId
+     * @param page
+     * @param size
+     * @return
+     */
+    public Page<QuizSession> findAllQuizs(Long quizId,int page,int size);
 }
