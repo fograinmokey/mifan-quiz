@@ -78,6 +78,7 @@ public class AnswersServiceImpl extends BaseServiceAdapter<Answers, AnswersDao> 
     	
     	//保存答案表
     	String answers = Joiner.on(",").join(answersList);  
+    	entity.setIdList(idList);
     	entity.setAnswers(answers);
     	entity.setAllDone(quizSession.getAllDone());
     	entity.setIsRight(isRight);

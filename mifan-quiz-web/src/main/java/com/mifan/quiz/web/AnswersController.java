@@ -52,10 +52,11 @@ public class AnswersController extends RestfulController<Answers> {
              Map<String, Object> result = new HashMap<>();
              result.put("allDone", entity.getAllDone());
              result.put("isRight", entity.getIsRight());
+             result.put("idList",entity.getIdList());
              result.put("type", "Answers");
              result.put("id", entity.getId());
              return ResponseEntity.created(URI.create("/answers" + "/" + entity.getId())).body(Responses.builder().data(result));
-     }
+    	 	}
 	  }
 
 }

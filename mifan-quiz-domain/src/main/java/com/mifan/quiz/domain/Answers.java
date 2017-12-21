@@ -37,7 +37,17 @@ public class Answers extends BaseEntity {
     @NotEmpty(groups = {Post.class}, message = "NotEmpty.QuizSession.answersList")
     private List<Long> answersList ;  //用户提交的答案
     
-    public Integer getAllDone() {
+    private List<Long> idList ;  //该题正确答案
+    
+	public List<Long> getIdList() {
+		return idList;
+	}
+
+	public void setIdList(List<Long> idList) {
+		this.idList = idList;
+	}
+
+	public Integer getAllDone() {
 		return allDone;
 	}
 
