@@ -33,8 +33,28 @@ public class QuizSession extends BaseEntity {
     private Integer rightNum;
     @Null(groups = {Post.class}, message = "{MustNull.QuizSession.allDone}")
     private Integer allDone;
+    
+    private float score ;  //当前得分
+    
+    private QuizCount count ;
+    
+	public float getScore() {
+		return score;
+	}
 
-    public QuizSession() {
+	public void setScore(float score) {
+		this.score = score;
+	}
+
+	public QuizCount getCount() {
+		return count;
+	}
+
+	public void setCount(QuizCount count) {
+		this.count = count;
+	}
+
+	public QuizSession() {
     }
 
     public QuizSession(Long id) {

@@ -1,6 +1,9 @@
 package com.mifan.quiz.domain;
 
+import javax.validation.constraints.NotNull;
+
 import org.moonframework.model.mybatis.domain.BaseEntity;
+import org.moonframework.validation.ValidationGroups.Post;
 
 /**
  * @author ZYW
@@ -25,7 +28,8 @@ public class QuizCount extends BaseEntity {
     public static final String TENTH = "tenth";
 
     private static final long serialVersionUID = -2012619555374441769L;
-
+    
+    @NotNull(groups = {Post.class}, message = "{NotNull.QuizCount.quizId}")
     private Long quizId;
     private Integer peoples;
     private Integer first;

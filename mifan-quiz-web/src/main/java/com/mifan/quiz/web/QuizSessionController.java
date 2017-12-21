@@ -13,18 +13,23 @@ import org.moonframework.web.core.RestfulController;
 import org.moonframework.web.jsonapi.Data;
 import org.moonframework.web.jsonapi.Response;
 import org.moonframework.web.jsonapi.Responses;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mifan.quiz.domain.QuizSession;
+import com.mifan.quiz.service.QuizSessionService;
 @RestController
 @RequestMapping("/quizSession")
 public class QuizSessionController extends RestfulController<QuizSession> {
 	
-
+	@Autowired
+	private QuizSessionService quizSessionService ;
+	
 	/**
 	 * 申请session_code绑定问卷
 	 * @param data
@@ -47,6 +52,7 @@ public class QuizSessionController extends RestfulController<QuizSession> {
 	/**
 	 * 生成sessionCode，（参考）
 	 */
+	//@RequiresAuthentication
     @RequestMapping(method = RequestMethod.POST,
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
@@ -72,5 +78,18 @@ public class QuizSessionController extends RestfulController<QuizSession> {
                 result.put("id", entity.getId());
                 return ResponseEntity.created(URI.create("/quizSession" + "/" + entity.getId())).body(Responses.builder().data(result));
         }
+    }
+    
+    
+    /**
+     * 答完题  查看结果
+     * @param sessionCode
+     * @return
+     */
+    //@RequiresAuthentication
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<Response> checkResult(@RequestParam String sessionCode){
+    	QuizSession quizSession  = quizSessionService.getResult(sessionCode);
+    	return ResponseEntity.ok(Responses.builder().data(quizSession));
     }
 }

@@ -9,4 +9,6 @@ import org.moonframework.model.mybatis.service.BaseService;
  * @since 2017-12-12
  */
 public interface QuizSessionService extends BaseService<QuizSession> {
+	
+	public QuizSession getResult(String sessionCode);
 }
