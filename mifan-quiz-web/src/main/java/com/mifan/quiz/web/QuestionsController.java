@@ -1,11 +1,21 @@
 package com.mifan.quiz.web;
 
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.moonframework.web.core.RestfulController;
+import org.moonframework.web.jsonapi.Response;
+import org.moonframework.web.jsonapi.Responses;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mifan.quiz.domain.Questions;
+import com.mifan.quiz.service.QuestionsService;
 /**
  * @author ZYW
  *
@@ -14,7 +24,7 @@ import com.mifan.quiz.domain.Questions;
 @RequestMapping("/questions")
 public class QuestionsController extends RestfulController<Questions> {
     
-   /* @Autowired
+    @Autowired
     private QuestionsService questionsService;//此方法废弃,随时可删除
     
 //    @RequiresAuthentication
@@ -26,5 +36,5 @@ public class QuestionsController extends RestfulController<Questions> {
         HttpServletRequest request = getHttpServletRequest();    
         Page<Questions> pages = questionsService.findAll(quizId,page,size);
         return ResponseEntity.ok(Responses.builder().page(pages, "/questions", request.getParameterMap()).data(pages.getContent()));
-    }*/
+    }
 }

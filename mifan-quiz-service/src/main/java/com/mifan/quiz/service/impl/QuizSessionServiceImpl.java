@@ -31,21 +31,6 @@ public class QuizSessionServiceImpl extends BaseServiceAdapter<QuizSession, Quiz
         
         String sessionCode = UUID.randomUUID().toString();
         entity.setSessionCode(sessionCode);
-        // 先存如统计表  为后面查询结果做准备
-        QuizCount count ;
-        Long quizId = entity.getQuizId();
-        if (!Services.exists(QuizCount.class, quizId)) {
-        	count = new QuizCount();
-			count.setQuizId(quizId);
-			count.setPeoples(1);
-			count.setEnabled(1);
-			Services.save(QuizCount.class, count);
-		}else {
-			 count = Services.findOne(QuizCount.class, quizId);
-			 count.setPeoples(count.getPeoples()+1);
-			 Services.update(QuizCount.class, count);
-		}
-        
         return super.save(entity);
     }
 
@@ -57,7 +42,14 @@ public class QuizSessionServiceImpl extends BaseServiceAdapter<QuizSession, Quiz
 		Integer rightNum = quizSession.getRightNum();
 		QuizCount count =  Services.findOne(QuizCount.class,Restrictions.eq(QuizCount.QUIZ_ID, quizSession.getQuizId()));
 		if (count == null) {
-			throw new IllegalStateException("没有统计数据，请重新答题！");
+			count = new QuizCount();
+			count.setQuizId(quizSession.getQuizId());
+			count.setPeoples(1);
+			count.setEnabled(1);
+			Services.save(QuizCount.class, count);
+		}else {
+			 count.setPeoples(count.getPeoples()+1);
+			 Services.update(QuizCount.class, count);
 		}
 		//转化小数
 		float ratio  =   (float)rightNum/answerNum ;
