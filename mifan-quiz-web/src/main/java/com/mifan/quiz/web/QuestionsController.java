@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mifan.quiz.domain.Questions;
-import com.mifan.quiz.service.QuestionslService;
+import com.mifan.quiz.service.QuestionsService;
 /**
  * @author ZYW
  *
@@ -25,7 +25,7 @@ import com.mifan.quiz.service.QuestionslService;
 public class QuestionsController extends RestfulController<Questions> {
     
     @Autowired
-    private QuestionslService questionslService;
+    private QuestionsService questionsService;
     
 //    @RequiresAuthentication
     @RequestMapping(method = RequestMethod.GET)
@@ -35,7 +35,7 @@ public class QuestionsController extends RestfulController<Questions> {
             @RequestParam(required = true, name = "filter[quizId]") Long quizId,
             @RequestParam(required = true, name = "Session[sessionCode]") String sessionCode) {
         HttpServletRequest request = getHttpServletRequest();    
-        Page<Questions> pages = questionslService.findAlll(quizId,page,size,sessionCode);
+        Page<Questions> pages = questionsService.findAlll(quizId,page,size,sessionCode);
         return ResponseEntity.ok(Responses.builder().page(pages, "/questions", request.getParameterMap()).data(pages.getContent()));
     }
 }

@@ -30,4 +30,14 @@ public interface QuestionsService extends BaseService<Questions> {
      */
     public Page<Questions> findAll(Long quizId,int page,int size);
     
+    /**
+     * 分页查询试卷的试题  每页只显示一题
+     * @param quizId
+     * @param page
+     * @param size
+     * @param sessionCode
+     * @return
+     */
+    public Page<Questions> findAlll(Long quizId,int page,int size,String sessionCode);
+    
 }
