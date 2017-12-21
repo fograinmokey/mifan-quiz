@@ -43,13 +43,23 @@ public class Questions extends BaseEntity {
     private List<Options> options;
 
 
-    private long rightNum;
+    private long rightNum;  //这道题 答对的人数
      
-    private long allNum;
+    private long allNum;   // 答这道题的总人数 
      
-    private String ratio;
+    private String ratio;  //每道题的答对率
     
-    public long getRightNum() {
+    private Answers answers ;  // 用户做这道题提交的答案
+    
+    public Answers getAnswers() {
+		return answers;
+	}
+
+	public void setAnswers(Answers answers) {
+		this.answers = answers;
+	}
+
+	public long getRightNum() {
 		return rightNum;
 	}
 
@@ -140,4 +150,13 @@ public class Questions extends BaseEntity {
     public void setOptions(List<Options> options) {
         this.options = options;
     }
+
+	@Override
+	public String toString() {
+		return "Questions [quizId=" + quizId + ", questionTitle=" + questionTitle + ", type=" + type + ", displayOrder="
+				+ displayOrder + ", options=" + options + ", rightNum=" + rightNum + ", allNum=" + allNum + ", ratio="
+				+ ratio + ", answers=" + answers + "]";
+	}
+    
+    
 }
