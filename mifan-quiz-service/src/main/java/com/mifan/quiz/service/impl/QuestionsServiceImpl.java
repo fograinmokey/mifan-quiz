@@ -88,12 +88,11 @@ public class QuestionsServiceImpl extends BaseServiceAdapter<Questions, Question
         
         List<Options> options = new ArrayList<Options>();
         for(Questions q : entities) {
-            if(q.getType() == 1) {//类型为单选题时，正确答案只能有一个
-                int sum = q.getOptions().stream().map(o -> o.getIsCorrect()).reduce((s,c) -> s + c).get();
-                if(sum > 1) {
-                    throw new IllegalStateException("单选题不应该有两个正确答案！");
-                }
-            }
+            int rightCount = q.getOptions().stream().map(o -> o.getIsCorrect()).reduce((s,c) -> s + c).get();
+            if(rightCount < 1)
+                throw new IllegalStateException("题目必须有一个正确选项");
+            if(q.getType() == 1 && rightCount > 1)//类型为单选题时，正确答案只能有一个
+                throw new IllegalStateException("单选题不应该有两个正确答案！");
             for(Options o : q.getOptions()) {
                 o.setQuestionId(q.getId());
                 o.setCreator(q.getCreator());
