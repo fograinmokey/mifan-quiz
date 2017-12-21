@@ -1,5 +1,6 @@
 package com.mifan.quiz.web;
 
+import org.moonframework.web.core.RestfulController;
 import org.moonframework.web.jsonapi.Response;
 import org.moonframework.web.jsonapi.Responses;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import com.mifan.quiz.service.QuestionsService;
 
 @RestController
 @RequestMapping("/optionsCount")
-public class QuizsOptionsCountController  {
+public class QuizsOptionsCountController  extends RestfulController<Questions>{
 	 
 	@Autowired
 	private  QuestionsService  questionsService;
