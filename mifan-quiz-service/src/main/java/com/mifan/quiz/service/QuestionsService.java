@@ -29,4 +29,19 @@ public interface QuestionsService extends BaseService<Questions> {
      * @return
      */
     public Page<Questions> findAll(Long quizId,int page,int size);
+    
+    /**
+     * 统计每道题答对率
+     * @param questionId
+     * @return
+     */
+    
+    public Questions quesanswersRate(Long questionId);
+    /**
+     * 统计每道题的每个选项的被选中次数
+     * @param questionId
+     * @return
+     */
+    public Questions optionsCount(Long questionId);
+    
 }

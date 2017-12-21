@@ -42,7 +42,38 @@ public class Questions extends BaseEntity {
     @Valid
     private List<Options> options;
 
-    public Questions() {
+
+    private long rightNum;
+     
+    private long allNum;
+     
+    private String ratio;
+    
+    public long getRightNum() {
+		return rightNum;
+	}
+
+	public void setRightNum(long rightNum) {
+		this.rightNum = rightNum;
+	}
+
+	public long getAllNum() {
+		return allNum;
+	}
+
+	public void setAllNum(long allNum2) {
+		this.allNum = allNum2;
+	}
+
+	public String getRatio() {
+		return ratio;
+	}
+
+	public void setRatio(String ratio) {
+		this.ratio = ratio;
+	}
+
+	public Questions() {
     }
 
     public Questions(Long id) {

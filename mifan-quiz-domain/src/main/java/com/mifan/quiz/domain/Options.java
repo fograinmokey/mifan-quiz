@@ -29,7 +29,17 @@ public class Options extends BaseEntity {
     @Range(min = 0, max = 1, groups = {Post.class}, message = "{Error.Options.isCorrect}")
     private Integer isCorrect;
 
-    public Options() {
+    private Integer answerCount;
+    
+    public Integer getAnswerCount() {
+		return answerCount;
+	}
+
+	public void setAnswerCount(Integer answerCount) {
+		this.answerCount = answerCount;
+	}
+
+	public Options() {
     }
 
     public Options(Long id) {
