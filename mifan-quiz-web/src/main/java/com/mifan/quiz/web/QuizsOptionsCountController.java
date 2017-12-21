@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mifan.quiz.domain.Questions;
-import com.mifan.quiz.service.QuestionsService;
+import com.mifan.quiz.service.QuizCountService;
 
 @RestController
 @RequestMapping("/optionsCount")
 public class QuizsOptionsCountController  extends RestfulController<Questions>{
 	 
 	@Autowired
-	private  QuestionsService  questionsService;
+	private  QuizCountService  quizCountService;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Response> optionsCount(Long questionId){
 		
-		Questions questions = questionsService.optionsCount(questionId);
+		Questions questions = quizCountService.optionsCount(questionId);
 
 		return ResponseEntity.ok(Responses.builder().data(questions));
 		
