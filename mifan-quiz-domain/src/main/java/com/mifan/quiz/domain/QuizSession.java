@@ -38,14 +38,14 @@ public class QuizSession extends BaseEntity {
     
     private float score ;  //当前得分
     
-    private List<Questions> questions;
+    private List<Answers> answers;
     
-    public List<Questions> getQuestions() {
-		return questions;
+    public List<Answers> getAnswers() {
+		return answers;
 	}
 
-	public void setQuestions(List<Questions> questions) {
-		this.questions = questions;
+	public void setAnswers(List<Answers> answers) {
+		this.answers = answers;
 	}
 
 	private QuizCount count ;

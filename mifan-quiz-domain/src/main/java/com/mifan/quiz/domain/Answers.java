@@ -39,6 +39,16 @@ public class Answers extends BaseEntity {
     
     private List<Long> idList ;  //该题正确答案
     
+    private List<Questions> questions;
+    
+	public List<Questions> getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(List<Questions> questions) {
+		this.questions = questions;
+	}
+
 	public List<Long> getIdList() {
 		return idList;
 	}
