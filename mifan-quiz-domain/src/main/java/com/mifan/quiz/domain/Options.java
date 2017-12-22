@@ -29,13 +29,13 @@ public class Options extends BaseEntity {
     @Range(min = 0, max = 1, groups = {Post.class}, message = "{Error.Options.isCorrect}")
     private Integer isCorrect;
 
-    private Integer answerCount;
+    private int answerCount;
     
-    public Integer getAnswerCount() {
+    public int getAnswerCount() {
 		return answerCount;
 	}
 
-	public void setAnswerCount(Integer answerCount) {
+	public void setAnswerCount(int answerCount) {
 		this.answerCount = answerCount;
 	}
 
