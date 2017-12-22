@@ -8,6 +8,8 @@ import javax.validation.constraints.Null;
 import org.moonframework.model.mybatis.domain.BaseEntity;
 import org.moonframework.validation.ValidationGroups.Post;
 
+import com.mifan.quiz.domain.support.QuestionAnswers;
+
 /**
  * @author ZYW
  * @version 1.0
@@ -39,6 +41,8 @@ public class QuizSession extends BaseEntity {
     private float score ;  //当前得分
     
     private List<Answers> answers;
+    
+    private List<QuestionAnswers> questionAnswers;//某个用户的某套问卷所有答案
     
     public List<Answers> getAnswers() {
 		return answers;
@@ -137,6 +141,14 @@ public class QuizSession extends BaseEntity {
      */
     public void setAllDone(Integer allDone) {
         this.allDone = allDone;
+    }
+
+    public List<QuestionAnswers> getQuestionAnswers() {
+        return questionAnswers;
+    }
+
+    public void setQuestionAnswers(List<QuestionAnswers> questionAnswers) {
+        this.questionAnswers = questionAnswers;
     }
 
 }

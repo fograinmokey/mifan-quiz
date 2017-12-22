@@ -6,6 +6,7 @@ import com.mifan.quiz.domain.Options;
 import com.mifan.quiz.domain.Questions;
 import com.mifan.quiz.domain.QuizCount;
 import com.mifan.quiz.domain.QuizSession;
+import com.mifan.quiz.domain.support.QuestionAnswers;
 import com.mifan.quiz.service.AnswersService;
 import com.mifan.quiz.service.BaseServiceAdapter;
 import com.mifan.quiz.service.QuestionsService;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.moonframework.model.mybatis.criterion.Criterion;
 import org.moonframework.model.mybatis.criterion.Restrictions;
 import org.moonframework.model.mybatis.domain.Pages;
@@ -152,8 +154,42 @@ public class QuizCountServiceImpl extends BaseServiceAdapter<QuizCount, QuizCoun
         
         return pages;
     }
-	
+	public Page<QuizSession> findQuestionAnswers(Long quizId, int page, int size) {
+        PageRequest pageRequest =  Pages.builder().page(page).size(size).build();
+        Criterion criterion = Restrictions.eq(QuizSession.QUIZ_ID, quizId);
+        Page<QuizSession> pages = Services.findAll(QuizSession.class, criterion, pageRequest);
+        if(pages.hasContent()) {
+            List<QuizSession> quizSessions = pages.getContent();
+            //通过QuizSession取session_id
+            Long[] sessionIds = quizSessions.stream().map(QuizSession::getId).collect(Collectors.toList()).toArray(new Long[quizSessions.size()]);
+            //用sessionIds取出answers
+            List<Answers> answers = Services.findAll(Answers.class, Restrictions.in(Answers.SESSION_ID, sessionIds));
+            Map<Long,List<Answers>> sessionMap = answers.stream().collect(Collectors.groupingBy(Answers::getSessionId));
+            List<Questions> questions = Services.findAll(Questions.class,Restrictions.and(
+                                                Restrictions.eq(Questions.QUIZ_ID, quizId),
+                                                Restrictions.eq(Questions.ENABLED, 1)),
+                                                Pages.builder().sort(Pages.sortBuilder().add(Questions.DISPLAY_ORDER,true).build()).build()).getContent();
+            for(QuizSession quizSession : quizSessions) {
+                List<QuestionAnswers> list = new ArrayList<QuestionAnswers>();
+                List<Answers> sessionAnswers = sessionMap.get(quizSession.getId());
+                for(Questions question : questions) {
+                    QuestionAnswers qa = new QuestionAnswers(question.getId(),question.getQuestionTitle());
+                    list.add(qa);
+                    
+                    if(sessionAnswers != null) {
+                        Map<Long,List<Answers>> questionMap = sessionAnswers.stream().collect(Collectors.groupingBy(Answers::getQuestionId));
+                        List<Answers> questionAnswers = questionMap.get(question.getId());
+                        if(CollectionUtils.isNotEmpty(questionAnswers)) {
+                            qa.setAnswers(questionAnswers.get(0).getAnswers());
+                        }
+                    }
+                }
+                quizSession.setQuestionAnswers(list);
+            }
+        }
+        return pages;
 	}
+}
 
 
 

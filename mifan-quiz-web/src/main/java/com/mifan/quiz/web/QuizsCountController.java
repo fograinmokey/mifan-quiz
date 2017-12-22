@@ -62,7 +62,7 @@ public class QuizsCountController extends RestfulController<Questions> {
             @RequestParam(required = false, name = "page[size]", defaultValue = "10") int size,
             @RequestParam(required = true, name = "filter[quizId]") Long quizId) {
         HttpServletRequest request = getHttpServletRequest();    
-        Page<QuizSession> pages = quizCountService.findAllQuizs(quizId,page,size);
+        Page<QuizSession> pages = quizCountService.findQuestionAnswers(quizId,page,size);
         return ResponseEntity.ok(Responses.builder().page(pages, "/quizsCountByPage", request.getParameterMap()).data(pages.getContent()));
     }
 
