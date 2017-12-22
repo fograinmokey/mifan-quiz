@@ -31,28 +31,8 @@ public class QuizSessionController extends RestfulController<QuizSession> {
 	private QuizSessionService quizSessionService ;
 	
 	/**
-	 * 申请session_code绑定问卷
-	 * @param data
-	 * @return
-	 */
-	//@RequiresAuthentication
-    /*@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Response> applySessionCode(@RequestBody Data<QuizSession> data){
-		// 随机生成 随机码
-		String s = UUID.randomUUID().toString();
-		//绑定 随机码 和问卷
-		data.getData().setSessionCode(s);
-		//存入数据库
-		super.doPost(data);
-		// 获取 并返回 该 客户 要 填写的 问卷信息
-		Quizs quizs = Services.findOne(Quizs.class, data.getData().getQuizId());
-		
-		return ResponseEntity.ok(Responses.builder().data(quizs));
-	}*/
-	/**
 	 * 生成sessionCode，（参考）
 	 */
-	//@RequiresAuthentication
     @RequestMapping(method = RequestMethod.POST,
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
@@ -86,7 +66,6 @@ public class QuizSessionController extends RestfulController<QuizSession> {
      * @param sessionCode
      * @return
      */
-    //@RequiresAuthentication
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<Response> checkResult(@RequestParam String sessionCode){
     	QuizSession quizSession  = quizSessionService.getResult(sessionCode);

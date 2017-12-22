@@ -28,7 +28,6 @@ public class AnswersController extends RestfulController<Answers> {
 	   *  提交答案，记录quiz_session，返回是否答对
 	   * @return
 	   */
-	//@RequiresAuthentication
     @RequestMapping(method = RequestMethod.POST,
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)

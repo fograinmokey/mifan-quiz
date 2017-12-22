@@ -67,7 +67,7 @@ public class QuizsController extends RestfulController<Quizs> {
         }
         return super.doPost(data);
     }
-//    @RequiresAuthentication
+    @RequiresAuthentication
     @RequestMapping(value = "/{id}",method = RequestMethod.PATCH,consumes = APPLICATION_JSON_VALUE,produces = APPLICATION_JSON_VALUE)
     @Override
     public ResponseEntity<Response> doPatch(@PathVariable Long id, @RequestBody Data<Quizs> data){
@@ -75,7 +75,7 @@ public class QuizsController extends RestfulController<Quizs> {
         hasPermissions(quiz.getCreator());
         return super.doPatch(id, data);
     }
-//  @RequiresAuthentication
+    @RequiresAuthentication
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @Override
     public ResponseEntity<Response> doDelete(@PathVariable Long id) {

@@ -38,9 +38,13 @@ public class QuizSessionServiceImpl extends BaseServiceAdapter<QuizSession, Quiz
 	public QuizSession getResult(String sessionCode) {
 		//查询当前会话
 		QuizSession quizSession = Services.findOne(QuizSession.class, Restrictions.eq(QuizSession.SESSION_CODE, sessionCode));
+		if(quizSession == null)
+		    throw new IllegalStateException("您没有权限！");
+		if(quizSession.getAllDone() != 1)
+		    throw new IllegalStateException("请先答完试题！");
 		Integer answerNum = quizSession.getAnswerNum();
 		Integer rightNum = quizSession.getRightNum();
-		QuizCount count =  Services.findOne(QuizCount.class,Restrictions.eq(QuizCount.QUIZ_ID, quizSession.getQuizId()));
+		/*QuizCount count =  Services.findOne(QuizCount.class,Restrictions.eq(QuizCount.QUIZ_ID, quizSession.getQuizId()));
 		if (count == null) {
 			count = new QuizCount();
 			count.setQuizId(quizSession.getQuizId());
@@ -50,14 +54,21 @@ public class QuizSessionServiceImpl extends BaseServiceAdapter<QuizSession, Quiz
 		}else {
 			 count.setPeoples(count.getPeoples()+1);
 			 Services.update(QuizCount.class, count);
-		}
+		}*/
+		QuizCount count = new QuizCount();
+		count.setQuizId(quizSession.getQuizId());
+		count.setPeoples(1);
+		count.setEnabled(1);
+		Services.saveOrUpdate(QuizCount.class, count);//防止高并发造成的人数不准确，直接修改加锁
+		count = Services.findOne(QuizCount.class, count.getId());
+		
 		//转化小数
 		float ratio  =   (float)rightNum/answerNum ;
 	    DecimalFormat df = new DecimalFormat("0.00");//格式化小数   
 	    String scorel = df.format(ratio);
 		float score = Float.parseFloat(scorel);
 		 
-		      if (score>=0 && score<0.1) {
+		if (score>=0 && score<0.1) {
 		      count.setFirst(count.getFirst()+1);
 		}else if (score>=0.1 && score <=0.19) {
 			  count.setSecond(count.getSecond()+1);

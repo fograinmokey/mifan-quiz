@@ -442,8 +442,11 @@
     </insert>
 
     <!-- insert into on duplicate -->
-    <insert id="saveOrUpdate" parameterType="com.mifan.quiz.domain.QuizCount" keyProperty="id" useGeneratedKeys="true">
+    <!-- <insert id="saveOrUpdate" parameterType="com.mifan.quiz.domain.QuizCount" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO quiz_count(<include refid="insertColumns"/>) VALUES (<include refid="insertValues"/>) ON DUPLICATE KEY UPDATE <include refid="updateValues"/>
+    </insert> -->
+    <insert id="saveOrUpdate" parameterType="com.mifan.quiz.domain.QuizCount" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO quiz_count(<include refid="insertColumns"/>) VALUES (<include refid="insertValues"/>) ON DUPLICATE KEY UPDATE peoples = peoples + #{peoples}
     </insert>
 
     <!-- delete -->

@@ -30,10 +30,8 @@ public class QuizsCountController extends RestfulController<Questions> {
 	public ResponseEntity<Response> quesanswersRate(@PathVariable Long id){
 		
 		Questions question = quizCountService.quesanswersRate(id);
-		
 		return ResponseEntity.ok(Responses.builder().data(question));
-		
-}
+	}
 	/**
 	 * 每道题的每个选项的被选中次数
 	 * @param 题目的id
@@ -43,11 +41,8 @@ public class QuizsCountController extends RestfulController<Questions> {
 	public ResponseEntity<Response> optionsCount(@PathVariable Long id){
 		
 		Questions questions = quizCountService.optionsCount(id);
-
 		return ResponseEntity.ok(Responses.builder().data(questions));
-		
-		
-}
+	}
 	
 	/**
 	 * 分页展示问卷答案
@@ -63,7 +58,7 @@ public class QuizsCountController extends RestfulController<Questions> {
             @RequestParam(required = true, name = "filter[quizId]") Long quizId) {
         HttpServletRequest request = getHttpServletRequest();    
         Page<QuizSession> pages = quizCountService.findQuestionAnswers(quizId,page,size);
-        return ResponseEntity.ok(Responses.builder().page(pages, "/quizsCountByPage", request.getParameterMap()).data(pages.getContent()));
+        return ResponseEntity.ok(Responses.builder().page(pages, "/quizsCount", request.getParameterMap()).data(pages.getContent()));
     }
 
 	
