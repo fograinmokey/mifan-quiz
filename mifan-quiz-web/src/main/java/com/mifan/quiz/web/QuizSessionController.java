@@ -15,16 +15,16 @@ import org.moonframework.web.jsonapi.Response;
 import org.moonframework.web.jsonapi.Responses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mifan.quiz.domain.QuizSession;
 import com.mifan.quiz.service.QuizSessionService;
 @RestController
-@RequestMapping("/quizSession")
+@RequestMapping("/quizSessions")
 public class QuizSessionController extends RestfulController<QuizSession> {
 	
 	@Autowired
@@ -54,9 +54,9 @@ public class QuizSessionController extends RestfulController<QuizSession> {
             default:
                 Map<String, Object> result = new HashMap<>();
                 result.put("sessionCode", entity.getSessionCode());
-                result.put("type", "quizSession");
+                result.put("type", "quizSessions");
                 result.put("id", entity.getId());
-                return ResponseEntity.created(URI.create("/quizSession" + "/" + entity.getId())).body(Responses.builder().data(result));
+                return ResponseEntity.created(URI.create("/quizSessions" + "/" + entity.getId())).body(Responses.builder().data(result));
         }
     }
     
@@ -65,8 +65,8 @@ public class QuizSessionController extends RestfulController<QuizSession> {
      * @param sessionCode
      * @return
      */
-    @RequestMapping(value = "/score", method = RequestMethod.GET)
-    public ResponseEntity<Response> checkResult(@RequestParam String sessionCode){
+    @RequestMapping(value = "/score/{sessionCode}", method = RequestMethod.GET)
+    public ResponseEntity<Response> checkResult(@PathVariable String sessionCode){
     	QuizSession quizSession  = quizSessionService.getResult(sessionCode);
     	return ResponseEntity.ok(Responses.builder().data(quizSession));
     }

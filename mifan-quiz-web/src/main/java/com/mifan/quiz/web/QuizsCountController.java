@@ -24,7 +24,7 @@ import com.mifan.quiz.domain.QuizSession;
 import com.mifan.quiz.service.QuizCountService;
 
 @RestController
-@RequestMapping("/quizsCount")
+@RequestMapping("/quizsCounts")
 public class QuizsCountController extends RestfulController<QuizCount> {
 	@Autowired
 	private  QuizCountService quizCountService;
@@ -34,7 +34,9 @@ public class QuizsCountController extends RestfulController<QuizCount> {
 	 * @param 题目的id
 	 * @return
 	 */
-	@RequestMapping(value = "/{id}/ratio",method = RequestMethod.GET)
+	@RequiresAuthentication
+    @RequiresRoles(ROLE_ADMIN)
+	@RequestMapping(value = "/questions/{id}",method = RequestMethod.GET)
 	public ResponseEntity<Response> quesanswersRate(@PathVariable Long id){
 		
 		Questions question = quizCountService.quesanswersRate(id);
@@ -45,7 +47,9 @@ public class QuizsCountController extends RestfulController<QuizCount> {
 	 * @param 题目的id
 	 * @return
 	 */
-	@RequestMapping(value = "/{id}/count",method = RequestMethod.GET)
+	@RequiresAuthentication
+    @RequiresRoles(ROLE_ADMIN)
+	@RequestMapping(value = "/questions/{id}/options",method = RequestMethod.GET)
 	public ResponseEntity<Response> optionsCount(@PathVariable Long id){
 		Questions questions = quizCountService.optionsCount(id);
 		return ResponseEntity.ok(Responses.builder().data(questions));
@@ -58,6 +62,8 @@ public class QuizsCountController extends RestfulController<QuizCount> {
 	 * @param quizId
 	 * @return
 	 */
+	@RequiresAuthentication
+    @RequiresRoles(ROLE_ADMIN)
     @RequestMapping(value = "/quizs",method = RequestMethod.GET)
     public ResponseEntity<Response> doGetPageByQuiz(
             @RequestParam(required = false, name = "page[number]", defaultValue = "1") int page,
