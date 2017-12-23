@@ -27,13 +27,12 @@ public class QuestionsController extends RestfulController<Questions> {
     @Autowired
     private QuestionsService questionsService;
     
-//  @RequiresAuthentication
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<Response> doGetPageByQuiz(
             @RequestParam(required = false, name = "page[number]", defaultValue = "1") int page,
             @RequestParam(required = false, name = "page[size]", defaultValue = "1") int size,
             @RequestParam(required = true, name = "filter[quizId]") Long quizId,
-            @RequestParam(required = true, name = "Session[sessionCode]") String sessionCode) {
+            @RequestParam(required = true, name = "filter[sessionCode]") String sessionCode) {
         HttpServletRequest request = getHttpServletRequest();    
         Page<Questions> pages = questionsService.findAlll(quizId,page,size,sessionCode);
         return ResponseEntity.ok(Responses.builder().page(pages, "/questions", request.getParameterMap()).data(pages.getContent()));

@@ -41,20 +41,20 @@ public class AnswersController extends RestfulController<Answers> {
           hasError(validate(entity, Post.class));
           afterPostValidate(entity);
     	 switch (Services.save(entityClass, entity)) {
-         case 0:
-             throw new IllegalStateException();
-         case ACCEPTED:
-             return ResponseEntity.accepted().build();
-         case NO_CONTENT:
-             return ResponseEntity.noContent().build();
-         default:
-             Map<String, Object> result = new HashMap<>();
-             result.put("allDone", entity.getAllDone());
-             result.put("isRight", entity.getIsRight());
-             result.put("idList",entity.getIdList());
-             result.put("type", "Answers");
-             result.put("id", entity.getId());
-             return ResponseEntity.created(URI.create("/answers" + "/" + entity.getId())).body(Responses.builder().data(result));
+             case 0:
+                 throw new IllegalStateException();
+             case ACCEPTED:
+                 return ResponseEntity.accepted().build();
+             case NO_CONTENT:
+                 return ResponseEntity.noContent().build();
+             default:
+                 Map<String, Object> result = new HashMap<>();
+                 result.put("allDone", entity.getAllDone());
+                 result.put("isRight", entity.getIsRight());
+                 result.put("idList",entity.getIdList());
+                 result.put("type", "Answers");
+                 result.put("id", entity.getId());
+                 return ResponseEntity.created(URI.create("/answers" + "/" + entity.getId())).body(Responses.builder().data(result));
     	 	}
 	  }
 

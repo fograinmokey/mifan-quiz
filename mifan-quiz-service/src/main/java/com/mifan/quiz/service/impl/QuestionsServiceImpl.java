@@ -105,16 +105,17 @@ public class QuestionsServiceImpl extends BaseServiceAdapter<Questions, Question
         PageRequest pageRequest =  Pages.builder().page(page).size(size).sort(Pages.sortBuilder().add(Questions.DISPLAY_ORDER,true).build()).build();
         Criterion criterion = Restrictions.and(Restrictions.eq(Questions.QUIZ_ID, quizId),Restrictions.eq(Questions.ENABLED, 1));
         Page<Questions> pages = super.findAll(criterion, pageRequest);
-        QuizSession quizSessionl = new QuizSession();
-        quizSessionl.setSessionCode(sessionCode);
-        QuizSession quizSession = Services.findOne(QuizSession.class, quizSessionl);
+        QuizSession find = new QuizSession();
+        find.setSessionCode(sessionCode);
+        find.setQuizId(quizId);
+        QuizSession quizSession = Services.findOne(QuizSession.class, find);
         if (quizSession == null) {
         	throw new IllegalStateException("没有该会话！请重新开始问卷");
 		}
-        List<Long> idList = new ArrayList<>();
         if(pages.hasContent()) {
             List<Questions> questions = pages.getContent();
             for (Questions question : questions) {
+                List<Long> idList = new ArrayList<>();//必须放在循环内部，否则每个题目的正确选项都是一样的，bug了
             	Answers answers = Services.findOne(Answers.class, Restrictions.and(Restrictions.eq(Answers.SESSION_ID, quizSession.getId()),
             			Restrictions.eq(Answers.QUESTION_ID, question.getId())));
             	if (answers != null) {
