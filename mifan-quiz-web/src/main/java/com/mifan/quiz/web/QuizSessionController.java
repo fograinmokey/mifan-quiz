@@ -28,7 +28,7 @@ import com.mifan.quiz.service.QuizSessionService;
 public class QuizSessionController extends RestfulController<QuizSession> {
 	
 	@Autowired
-	private QuizSessionService quizSessionService ;
+	private QuizSessionService quizSessionService;
 	
 	/**
 	 * 生成sessionCode，（参考）
@@ -60,13 +60,12 @@ public class QuizSessionController extends RestfulController<QuizSession> {
         }
     }
     
-    
     /**
      * 答完题  查看结果
      * @param sessionCode
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/score", method = RequestMethod.GET)
     public ResponseEntity<Response> checkResult(@RequestParam String sessionCode){
     	QuizSession quizSession  = quizSessionService.getResult(sessionCode);
     	return ResponseEntity.ok(Responses.builder().data(quizSession));
