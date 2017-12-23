@@ -1,5 +1,6 @@
 package com.mifan.quiz.domain;
 
+import javax.sound.midi.Patch;
 import javax.validation.constraints.NotNull;
 
 import org.moonframework.model.mybatis.domain.BaseEntity;
@@ -29,7 +30,7 @@ public class QuizCount extends BaseEntity {
 
     private static final long serialVersionUID = -2012619555374441769L;
     
-    @NotNull(groups = {Post.class}, message = "{NotNull.QuizCount.quizId}")
+    @NotNull(groups = {Post.class,Patch.class}, message = "{NotNull.QuizCount.quizId}")
     private Long quizId;
     private Integer peoples;
     private Integer first;
