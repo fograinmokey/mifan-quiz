@@ -40,36 +40,11 @@ public class QuizSession extends BaseEntity {
     
     private float score ;  //当前得分
     
-    private List<Answers> answers;
     
     private List<QuestionAnswers> questionAnswers;//某个用户的某套问卷所有答案
     
-    public List<Answers> getAnswers() {
-		return answers;
-	}
-
-	public void setAnswers(List<Answers> answers) {
-		this.answers = answers;
-	}
-
 	private QuizCount count ;
     
-	public float getScore() {
-		return score;
-	}
-
-	public void setScore(float score) {
-		this.score = score;
-	}
-
-	public QuizCount getCount() {
-		return count;
-	}
-
-	public void setCount(QuizCount count) {
-		this.count = count;
-	}
-
 	public QuizSession() {
     }
 
@@ -150,5 +125,19 @@ public class QuizSession extends BaseEntity {
     public void setQuestionAnswers(List<QuestionAnswers> questionAnswers) {
         this.questionAnswers = questionAnswers;
     }
+    public float getScore() {
+        return score;
+    }
 
+    public void setScore(float score) {
+        this.score = score;
+    }
+
+    public QuizCount getCount() {
+        return count;
+    }
+
+    public void setCount(QuizCount count) {
+        this.count = count;
+    }
 }

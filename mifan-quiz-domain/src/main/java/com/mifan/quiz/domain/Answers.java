@@ -30,57 +30,15 @@ public class Answers extends BaseEntity {
     private String answers;
     private Integer isRight;
     
-    private String sessionCode ;  //随机码
+    private String sessionCode;  //随机码
     
-    private Integer allDone ; //是否全部答完
+    private Integer allDone; //是否全部答完
     
     @NotEmpty(groups = {Post.class}, message = "NotEmpty.QuizSession.answersList")
-    private List<Long> answersList ;  //用户提交的答案
+    private List<Long> answersList;  //用户提交的答案
     
-    private List<Long> idList ;  //该题正确答案
+    private List<Long> correctOptions;  //该题正确选项
     
-    private List<Questions> questions;
-    
-	public List<Questions> getQuestions() {
-		return questions;
-	}
-
-	public void setQuestions(List<Questions> questions) {
-		this.questions = questions;
-	}
-
-	public List<Long> getIdList() {
-		return idList;
-	}
-
-	public void setIdList(List<Long> idList) {
-		this.idList = idList;
-	}
-
-	public Integer getAllDone() {
-		return allDone;
-	}
-
-	public void setAllDone(Integer allDone) {
-		this.allDone = allDone;
-	}
-
-	public List<Long> getAnswersList() {
-		return answersList;
-	}
-
-	public void setAnswersList(List<Long> answersList) {
-		this.answersList = answersList;
-	}
-
-	public String getSessionCode() {
-		return sessionCode;
-	}
-
-	public void setSessionCode(String sessionCode) {
-		this.sessionCode = sessionCode;
-	}
-
     public Answers() {
     }
 
@@ -140,5 +98,35 @@ public class Answers extends BaseEntity {
     public void setIsRight(Integer isRight) {
         this.isRight = isRight;
     }
+    public List<Long> getCorrectOptions() {
+        return correctOptions;
+    }
 
+    public void setCorrectOptions(List<Long> correctOptions) {
+        this.correctOptions = correctOptions;
+    }
+
+    public Integer getAllDone() {
+        return allDone;
+    }
+
+    public void setAllDone(Integer allDone) {
+        this.allDone = allDone;
+    }
+
+    public List<Long> getAnswersList() {
+        return answersList;
+    }
+
+    public void setAnswersList(List<Long> answersList) {
+        this.answersList = answersList;
+    }
+
+    public String getSessionCode() {
+        return sessionCode;
+    }
+
+    public void setSessionCode(String sessionCode) {
+        this.sessionCode = sessionCode;
+    }
 }

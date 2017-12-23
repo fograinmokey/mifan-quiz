@@ -36,7 +36,7 @@ public interface QuizCountService extends BaseService<QuizCount> {
      * @param size
      * @return
      */
-    public Page<QuizSession> findAllQuizs(Long quizId,int page,int size);
+    /*public Page<QuizSession> findAllQuizs(Long quizId,int page,int size);*/
     /**
      * 分页展示问卷答案 zyw
      * @param quizId

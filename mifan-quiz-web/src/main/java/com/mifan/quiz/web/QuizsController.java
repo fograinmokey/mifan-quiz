@@ -1,6 +1,7 @@
 package com.mifan.quiz.web;
 
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.moonframework.model.mybatis.criterion.Criterion;
 import org.moonframework.model.mybatis.criterion.Restrictions;
 import org.moonframework.model.mybatis.domain.BaseEntity;
@@ -35,6 +36,7 @@ public class QuizsController extends RestfulController<Quizs> {
     private QuizsService quizsService;
     
     @RequiresAuthentication
+    @RequiresRoles(ROLE_ADMIN)
     @RequestMapping(method = RequestMethod.GET)
     @Override
     public ResponseEntity<Response> doGetPage(

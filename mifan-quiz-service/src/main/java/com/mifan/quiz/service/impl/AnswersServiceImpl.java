@@ -39,18 +39,18 @@ public class AnswersServiceImpl extends BaseServiceAdapter<Answers, AnswersDao> 
     	    throw new IllegalStateException("随机码不存在！该会话不存在");
 		}
 		//查询正确的选项  考虑到多选题  则查出来就是List集合
-		List<Long> idList = new ArrayList<>();
+		List<Long> correctOptions = new ArrayList<>();
 		List<Options> optionList = Services.findAll(Options.class, Restrictions.and(Restrictions.eq(Options.QUESTION_ID, 
 				                    entity.getQuestionId()), Restrictions.eq(Options.IS_CORRECT, 1)));
 		for (Options options : optionList) {
-			idList.add(options.getId());
+		    correctOptions.add(options.getId());
 		}
 		
 		List<Long> answersList = entity.getAnswersList();
 		//与正确选项对比  返回是否正确
 		int isRight = 1 ;
-		if (idList.size() == answersList.size()) {
-			isRight = idList.containsAll(answersList) ? 1 : 0 ;
+		if (correctOptions.size() == answersList.size()) {
+			isRight = correctOptions.containsAll(answersList) ? 1 : 0 ;
 		}else {
 			isRight = 0 ;
 		}
@@ -70,7 +70,7 @@ public class AnswersServiceImpl extends BaseServiceAdapter<Answers, AnswersDao> 
     	
     	//保存答案表
     	String answers = Joiner.on(",").join(answersList);  
-    	entity.setIdList(idList);
+    	entity.setCorrectOptions(correctOptions);
     	entity.setAnswers(answers);
     	entity.setAllDone(quizSession.getAllDone());
     	entity.setIsRight(isRight);

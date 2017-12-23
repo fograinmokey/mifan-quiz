@@ -131,7 +131,7 @@ public class QuizCountServiceImpl extends BaseServiceAdapter<QuizCount, QuizCoun
 	 * @param size
 	 * @return
 	 */
-	@Override
+	/*@Override
 	public Page<QuizSession> findAllQuizs(Long quizId, int page, int size) {
         PageRequest pageRequest =  Pages.builder().page(page).size(size).build();
         Criterion criterion = Restrictions.eq(QuizSession.QUIZ_ID, quizId);
@@ -153,7 +153,7 @@ public class QuizCountServiceImpl extends BaseServiceAdapter<QuizCount, QuizCoun
         }
         
         return pages;
-    }
+    }*/
 	public Page<QuizSession> findQuestionAnswers(Long quizId, int page, int size) {
         PageRequest pageRequest =  Pages.builder().page(page).size(size).build();
         Criterion criterion = Restrictions.eq(QuizSession.QUIZ_ID, quizId);

@@ -29,10 +29,10 @@ public class Quizs extends BaseEntity {
 
     private static final long serialVersionUID = 2554034364669780132L;
 
-    @NotBlank(groups = {Post.class}, message = "NotNull.Quizs.title")
+    @NotBlank(groups = {Post.class,Patch.class}, message = "NotNull.Quizs.title")
     private String title;
     private String description;
-    @NotBlank(groups = {Post.class}, message = "NotNull.Quizs.backImg")
+    @NotBlank(groups = {Post.class,Patch.class}, message = "NotNull.Quizs.backImg")
     private String backImg;
     @Null(groups = {Post.class}, message = "{MustNull.Quizs.state}")
     @Range(groups = {Patch.class}, message = "{Error.Quizs.state}", min = 1,max = 2)

@@ -101,8 +101,8 @@ public class QuestionsServiceImpl extends BaseServiceAdapter<Questions, Question
      * @see com.mifan.quiz.service.QuestionsService#findAlll(java.lang.Long, int, int, java.lang.String)
      */
     @Override
-    public Page<Questions> findAlll(Long quizId,int page,int size,String sessionCode){
-        PageRequest pageRequest =  Pages.builder().page(page).size(size).sort(Pages.sortBuilder().add(Questions.DISPLAY_ORDER,true).build()).build();
+    public Page<Questions> findAlll(Long quizId,int page,String sessionCode){
+        PageRequest pageRequest =  Pages.builder().page(page).size(1).sort(Pages.sortBuilder().add(Questions.DISPLAY_ORDER,true).build()).build();
         Criterion criterion = Restrictions.and(Restrictions.eq(Questions.QUIZ_ID, quizId),Restrictions.eq(Questions.ENABLED, 1));
         Page<Questions> pages = super.findAll(criterion, pageRequest);
         QuizSession find = new QuizSession();
@@ -115,7 +115,7 @@ public class QuestionsServiceImpl extends BaseServiceAdapter<Questions, Question
         if(pages.hasContent()) {
             List<Questions> questions = pages.getContent();
             for (Questions question : questions) {
-                List<Long> idList = new ArrayList<>();//必须放在循环内部，否则每个题目的正确选项都是一样的，bug了
+                List<Long> correctOptions = new ArrayList<>();//必须放在循环内部，否则每个题目的正确选项都是一样的，bug了
             	Answers answers = Services.findOne(Answers.class, Restrictions.and(Restrictions.eq(Answers.SESSION_ID, quizSession.getId()),
             			Restrictions.eq(Answers.QUESTION_ID, question.getId())));
             	if (answers != null) {
@@ -124,9 +124,9 @@ public class QuestionsServiceImpl extends BaseServiceAdapter<Questions, Question
             		List<Options> optionList = Services.findAll(Options.class, Restrictions.and(Restrictions.eq(Options.QUESTION_ID, 
             				question.getId()), Restrictions.eq(Options.IS_CORRECT, 1)));
             		for (Options options : optionList) {
-            			idList.add(options.getId());
+            		    correctOptions.add(options.getId());
             		}
-            		answers.setIdList(idList);
+            		answers.setCorrectOptions(correctOptions);
 				}
 			}
             Long[] questionIds = questions.stream().map(Questions::getId).collect(Collectors.toList()).toArray(new Long[questions.size()]);
