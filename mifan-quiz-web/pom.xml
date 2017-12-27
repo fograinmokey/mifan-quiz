@@ -13,7 +13,7 @@
     <url>http://maven.apache.org</url>
     
     <properties>
-        <start-class>com.mifan.Application</start-class>
+        <start-class>com.mifan.quiz.Application</start-class>
     </properties>
     
     <dependencies>
