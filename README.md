@@ -1,5 +1,7 @@
 + 2017年12月20日
     + API初始化
++ 2018年2月9日
+    + 添加用户排名等功能
 
 ## 问卷
 
@@ -40,7 +42,9 @@
         + rightNum (int) - 答对个数
         + allDone (int) - 是否答完
         + enabled (int) - 是否可用
-        + score (float) - 得分
+        + score (String) - 得分
+        + ranking (float) - 排名
+        + exceedPeoplesRatio (String) - 超过人数比例
     + QuizCount - 得分统计类
         + quizId (Long) - 问卷id
         + peoples (int) - 答题人数
@@ -59,9 +63,6 @@
 ## 定制试卷
 
 ### 列表 [GET] /quizs?filter[state]=1
-+ Description
-    + [MUST] Authenticated
-    + [MUST] ROLE_ADMIN
 + Parameters
     + state
     + title
@@ -594,7 +595,9 @@
             "answerNum": 2,
             "rightNum": 0,
             "allDone": 1,
-            "score": 0,
+            "score": "0",
+            "ranking":10,
+            "exceedPeoplesRatio":0.80,
             "count": {
               "id": 2,
               "enabled": 1,
